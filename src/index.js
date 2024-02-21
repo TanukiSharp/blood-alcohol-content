@@ -61,7 +61,7 @@ const initializeControls = function() {
 const toHumanReadableTime = function(hours) {
     const fullHours = Math.floor(hours);
     const minutesDecimals = hours - fullHours;
-    const fullMinutes = Math.ceil(60 * minutesDecimals).toString().padStart(2, '0');
+    const fullMinutes = Math.floor(60 * minutesDecimals).toString().padStart(2, '0');
 
     return `${fullHours}h ${fullMinutes}m`;
 };
@@ -110,7 +110,7 @@ const recompute = function() {
         options
     );
 
-    outputBloodAlcoholConcentration.innerText = `${round(result.bloodAlcoholConcentration, 2)} g/L (${result.bloodAlcoholConcentration})`;
+    outputBloodAlcoholConcentration.innerText = `${round(result.bloodAlcoholConcentration, 2)} g/L`;
     outputTimeToLimit.innerText = `${toHumanReadableTime(result.timeToLimit)} (at ${toDateTime(result.timeToLimit)})`;
     outputTimeToZero.innerText = `${toHumanReadableTime(result.timeToZero)} (at ${toDateTime(result.timeToZero)})`;
 };
