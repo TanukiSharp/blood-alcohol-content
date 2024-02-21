@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Blood alcohol content calculator</title>
+        <link rel="shortcut icon" href="./favicon.png" />
+        <link rel="stylesheet" type="text/css" href="./styles.css" />
+        <script src="./index.js" type="module"></script>
+    </head>
+    <body>
+        Body weight: <input type="number" class="body-weight" /> (in kilograms)<br/><br/>
+        Gender: <select class="gender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select><br/><br/>
+        <hr/><br/>
+        Rho factor:<br/><br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Male: <input type="number" class="male-rho-factor" step="0.001" /> (default: <span class="default-male-rho-factor"></span> L/kg)<br/><br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Female: <input type="number" class="female-rho-factor" step="0.001" /> (default: <span class="default-female-rho-factor"></span> L/kg)<br/><br/>
+        Elimination rate: <input type="number" class="elimination-rate" step="0.001" /> (default is <span class="default-elimination-rate"></span> g/L/hour)<br/><br/>
+        Driving limit: <input type="number" class="driving-limit" /> (in g/L)<br/><br/>
+        <hr/><br/>
+        Drink quantity: <input type="number" class="drink-quantity"/> (in liters)<br/><br/>
+        Alcohol percent: <input type="number" class="drink-percent" /><br/><br/>
+        Time elapsed: <input type="number" class="elapsed-time" /> (in hours)<br/><br/>
+        <hr/><br/>
+        Alcohol concentration: <span class="output-blood-alcohol-concentration"></span><br/><br/>
+        Time to limit: <span class="output-time-to-limit"></span><br/><br/>
+        Time to zero: <span class="output-time-to-zero"></span><br/><br/>
+    </body>
+</html>
