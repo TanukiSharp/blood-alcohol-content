@@ -63,7 +63,11 @@ const toHumanReadableTime = function(hours) {
     const minutesDecimals = hours - fullHours;
     const fullMinutes = Math.floor(60 * minutesDecimals).toString().padStart(2, '0');
 
-    return `${fullHours}h ${fullMinutes}m`;
+    if (fullHours > 0) {
+        return `${fullHours}h ${fullMinutes}m`;
+    }
+
+    return `${fullMinutes}m`;
 };
 
 const toDateTime = function(hours) {
