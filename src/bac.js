@@ -80,30 +80,51 @@ export class Drink {
      *
      * @param {number} quantity Quantity in liters.
      * @param {number} alcoholPercentage
-     * @param {number} elapsedTime Elapsed time in hours.
+     * @param {number} startedAt Started at, in milliseconds since UNIX epoc.
      */
-    constructor(quantity, alcoholPercentage, elapsedTime) {
+    constructor(quantity, alcoholPercentage, startedAt) {
         this.quantity = quantity;
         this.alcoholPercentage = alcoholPercentage;
-        this.elapsedTime = elapsedTime;
+        this.startedAt = startedAt;
+    }
+}
+
+export class DrinkResult {
+    /**
+     *
+     * @param {number} timeToLimit Time until you can drive.
+     * @param {number} timeToZero Time until you have no more alcohol in blood.
+     */
+    constructor(timeToLimit, timeToZero) {
+        this.timeToLimit = timeToLimit;
+        this.timeToZero = timeToZero;
     }
 }
 
 /**
  *
  * @param {Drink[]} drinks Array of Drink instances.
+ * @param {number} now Current time, in milliseconds since UNIX epoc.
  * @param {Options} options Computation options.
  * @returns
  */
-export const computeBloodAlcoholConcentration = function(drinks, options) {
+export const computeBloodAlcoholConcentration = function(drinks, now, options) {
     const distributionVolume = options.bodyWeight * options.rhoFactor;
 
     let totalBloodAlcoholConcentration = 0;
+    let drinkResults = [];
 
     for (const drink of drinks) {
+        const elapsedTime = now - drink.startedAt;
+
         const alcoholMass = computeAlcoholMass(drink.quantity, drink.alcoholPercentage);
         const bloodAlcoholConcentration = computeAlcoholConcentration(alcoholMass, distributionVolume);
-        const bloodAlcoholConcentrationAtTime = computeBloodAlcoholConcentrationAtTime(bloodAlcoholConcentration, options.alcoholEliminationRate, drink.elapsedTime);
+        const bloodAlcoholConcentrationAtTime = computeBloodAlcoholConcentrationAtTime(bloodAlcoholConcentration, options.alcoholEliminationRate, elapsedTime);
+
+        const drinkTimeToLimit = computeTimeToZeroBloodAlcoholConcentration(Math.max(bloodAlcoholConcentration - options.drivingLimit, 0), options.alcoholEliminationRate);
+        const drinkTimeToZero = computeTimeToZeroBloodAlcoholConcentration(bloodAlcoholConcentration, options.alcoholEliminationRate);
+
+        drinkResults.push(new DrinkResult(drinkTimeToLimit, drinkTimeToZero));
 
         totalBloodAlcoholConcentration += bloodAlcoholConcentrationAtTime;
     }
@@ -114,6 +135,7 @@ export const computeBloodAlcoholConcentration = function(drinks, options) {
     return {
         bloodAlcoholConcentration: Math.max(totalBloodAlcoholConcentration, 0),
         timeToLimit,
-        timeToZero
+        timeToZero,
+        drinkResults,
     };
 };

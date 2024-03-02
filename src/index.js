@@ -1,4 +1,6 @@
 import { Drink, computeBloodAlcoholConcentration, AVERAGE_HUMAN_ALCOHOL_ELIMINATION_RATE, MALE_RHO_FACTOR, FEMALE_RHO_FACTOR, Options } from './bac.js';
+import { DrinkComponent } from './drinkComponent.js';
+import uiController from './uiController.js';
 
 const bodyWeight = document.getElementsByClassName('body-weight')[0];
 const gender = document.getElementsByClassName('gender')[0];
@@ -14,6 +16,8 @@ const drivingLimit = document.getElementsByClassName('driving-limit')[0];
 const drinkQuantity = document.getElementsByClassName('drink-quantity')[0];
 const drinkPercent = document.getElementsByClassName('drink-percent')[0];
 const elapsedTime = document.getElementsByClassName('elapsed-time')[0];
+
+const drinksContainer = document.getElementsByClassName('drinks-container')[0];
 
 const outputBloodAlcoholConcentration = document.getElementsByClassName('output-blood-alcohol-concentration')[0];
 const outputTimeToLimit = document.getElementsByClassName('output-time-to-limit')[0];
@@ -52,10 +56,6 @@ const initializeControls = function() {
     initializeControl(femaleRhoFactor, FEMALE_RHO_FACTOR, recompute);
     initializeControl(eliminationRate, AVERAGE_HUMAN_ALCOHOL_ELIMINATION_RATE, recompute);
     initializeControl(drivingLimit, undefined, recompute);
-
-    initializeControl(drinkQuantity, undefined, recompute);
-    initializeControl(drinkPercent, undefined, recompute);
-    initializeControl(elapsedTime, undefined, recompute);
 };
 
 const toHumanReadableTime = function(hours) {
@@ -83,6 +83,13 @@ const toDateTime = function(hours) {
 const round = function(value, digitCount) {
     const multiplier = Math.pow(10, digitCount);
     return Math.round(value * multiplier) / multiplier;
+};
+
+const createNewDrink = function() {
+    const container = document.createElement('div');
+
+
+    return
 };
 
 const recompute = function() {
@@ -121,7 +128,14 @@ const recompute = function() {
 
 const main = function() {
     initializeControls();
-    recompute();
+    //recompute();
+
+    let x = new DrinkComponent();
+    drinksContainer.appendChild(x.rootElement);
+    x = new DrinkComponent();
+    drinksContainer.appendChild(x.rootElement);
+    x = new DrinkComponent();
+    drinksContainer.appendChild(x.rootElement);
 };
 
 main();

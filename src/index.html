@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
+        <meta name="description" content="Blood alcohol concentration calculator.">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Blood alcohol content calculator</title>
         <link rel="shortcut icon" href="./favicon.png" />
@@ -9,24 +10,28 @@
         <script src="./index.js" type="module"></script>
     </head>
     <body>
-        Body weight: <input type="number" class="body-weight" /> (in kilograms)<br/><br/>
-        Gender: <select class="gender">
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-        </select><br/><br/>
-        <hr/><br/>
-        Rho factor:<br/><br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Male: <input type="number" class="male-rho-factor" step="0.001" /> (default: <span class="default-male-rho-factor"></span> L/kg)<br/><br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Female: <input type="number" class="female-rho-factor" step="0.001" /> (default: <span class="default-female-rho-factor"></span> L/kg)<br/><br/>
-        Elimination rate: <input type="number" class="elimination-rate" step="0.001" /> (default is <span class="default-elimination-rate"></span> g/L/hour)<br/><br/>
-        Driving limit: <input type="number" class="driving-limit" /> (in g/L)<br/><br/>
-        <hr/><br/>
-        Drink quantity: <input type="number" class="drink-quantity"/> (in liters)<br/><br/>
-        Alcohol percent: <input type="number" class="drink-percent" /><br/><br/>
-        Time elapsed: <input type="number" class="elapsed-time" /> (in hours)<br/><br/>
-        <hr/><br/>
-        Alcohol concentration: <span class="output-blood-alcohol-concentration"></span><br/><br/>
-        Time to limit: <span class="output-time-to-limit"></span><br/><br/>
-        Time to zero: <span class="output-time-to-zero"></span><br/><br/>
+        <div class="page main">
+            <button class="show-settings" title="Settings..."><div>⚙️</div></button>
+            <span class="output bac label">Alcohol concentration:</span><span class="output bac value">A</span>
+            <span class="output time-to-limit label">Time to limit:</span><span class="output time-to-limit value">B</span><span class="output time-to-limit hint">MEH</span>
+            <span class="output time-to-zero label">Time to zero:</span><span class="output time-to-zero value">C</span>
+            <button class="add-drink" title="Add a drink"><div>➕🍺</div></button>
+            <div class="drinks-container"></div>
+        </div>
+        <div class="page settings">
+            <button class="close">X</button>
+            <label for="bodyWeight">Body weight:</label><input type="number" id="bodyWeight" class="body-weight" /> (in kilograms)<br/><br/>
+            <label for="gender">Gender:</label><select id="gender" class="gender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select><br/><br/>
+            <hr/><br/>
+            Rho factor:<br/><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="genderMale">Male:</label><input type="number" id="genderMale" class="male-rho-factor" step="0.001" /> (default: <span class="default-male-rho-factor"></span> L/kg)<br/><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="genderFemale">Female:</label><input type="number" id="genderFemale" class="female-rho-factor" step="0.001" /> (default: <span class="default-female-rho-factor"></span> L/kg)<br/><br/>
+            <label for="eliminationRate">Elimination rate:</label><input type="number" id="eliminationRate" class="elimination-rate" step="0.001" /> (default is <span class="default-elimination-rate"></span> g/L/hour)<br/><br/>
+            <label for="drivingLimit">Driving limit:</label><input type="number" id="drivingLimit" class="driving-limit" /> (in g/L)<br/><br/>
+
+        </div>
     </body>
 </html>
