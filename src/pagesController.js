@@ -4,8 +4,6 @@ class PagesController {
         this._mainContainerElement = document.querySelector('.page.main');
         this._settingsContainerElement = document.querySelector('.page.settings');
 
-        this.showMain();
-
         console.log('------------- PagesController constructor -----------------');
     }
 

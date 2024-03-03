@@ -20,17 +20,51 @@
         </div>
         <div class="page settings">
             <button class="close">X</button>
-            <label for="bodyWeight">Body weight:</label><input type="number" id="bodyWeight" class="body-weight" /> (in kilograms)<br/><br/>
-            <label for="gender">Gender:</label><select id="gender" class="gender">
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-            </select><br/><br/>
-            <hr/><br/>
-            Rho factor:<br/><br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="genderMale">Male:</label><input type="number" id="genderMale" class="male-rho-factor" step="0.001" /> (default: <span class="default-male-rho-factor"></span> L/kg)<br/><br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="genderFemale">Female:</label><input type="number" id="genderFemale" class="female-rho-factor" step="0.001" /> (default: <span class="default-female-rho-factor"></span> L/kg)<br/><br/>
-            <label for="eliminationRate">Elimination rate:</label><input type="number" id="eliminationRate" class="elimination-rate" step="0.001" /> (default is <span class="default-elimination-rate"></span> g/L/hour)<br/><br/>
-            <label for="drivingLimit">Driving limit:</label><input type="number" id="drivingLimit" class="driving-limit" /> (in g/L)<br/><br/>
+            <div class="variables">
+                <label class="body-weight label" for="body-weight">Body weight:</label>
+                <input class="body-weight value" type="number" id="body-weight"/>
+                <span class="body-weight hint">(in kg)</span>
+
+                <label class="rho-factor label" for="rho-factor">Rho factor:</label>
+                <input class="rho-factor value" type="number" id="rho-factor" step="0.001"/>
+                <span class="rho-factor hint">(in L/kg)</span>
+
+                <label class="elimination-rate label" for="elimination-rate">Elimination rate:</label>
+                <input class="elimination-rate value" type="number" id="elimination-rate" step="0.001"/>
+                <span class="elimination-rate hint">(in g/L/hour)</span>
+
+                <label class="driving-limit label" for="driving-limit">Driving limit:</label>
+                <input class="driving-limit value" type="number" id="driving-limit" step="0.1"/>
+                <span class="driving-limit hint">(in g/L)</span>
+            </div>
+            <hr/>
+            <div class="info">
+                <div class="rho-factor">
+                    <span class="description">Rho factor for:</span>
+                    <div class="for-male">
+                        <span>Male: </span>
+                        <span class="default-value"></span>
+                        <span> L/kg</span>
+                    </div>
+                    <div class="for-female">
+                        <span>Female: </span>
+                        <span class="default-value"></span>
+                        <span> L/kg</span>
+                    </div>
+                </div>
+                <div class="elimination-rate">
+                    <span class="description">Elimination rate:</span>
+                    <div class="for-human">
+                        <span>Human average: </span>
+                        <span class="default-value"></span>
+                        <span> g/L/hour</span>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            <div>
+                To understand those values: <a href="https://en.wikipedia.org/wiki/Blood_alcohol_content" target="_blank">wikipedia</a>
+            </div>
         </div>
         <div class="page loading">Loading...</div>
     </body>

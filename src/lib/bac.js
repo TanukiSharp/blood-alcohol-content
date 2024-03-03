@@ -20,7 +20,7 @@ const ALCOHOL_VOLUMIC_MASS = 0.798;
 
 /**
  *
- * @param {number} drinkQuantity Volume of the drink in liters.
+ * @param {number} drinkQuantity Volume of the drink in L.
  * @param {number} alcoholPercentage
  * @returns {number} The mass of pure alcohol, in grams.
  */
@@ -31,7 +31,7 @@ const computeAlcoholMass = function(drinkQuantity, alcoholPercentage) {
 /**
  *
  * @param {number} alcoholMass Alcohol mass in grams.
- * @param {Number} distributionVolume Distribution volume in liters.
+ * @param {Number} distributionVolume Distribution volume in L.
  * @returns {number} Blood alcohol concentration in g/L.
  */
 const computeAlcoholConcentration = function(alcoholMass, distributionVolume) {
@@ -62,7 +62,7 @@ const computeTimeToZeroBloodAlcoholConcentration = function(bloodAlcoholConcentr
 export class Options {
     /**
      *
-     * @param {number} bodyWeight Body weight, in kilograms.
+     * @param {number} bodyWeight Body weight, in kg.
      * @param {number} rhoFactor Rho factor, in L/kg.
      * @param {number} alcoholEliminationRate Alcohol elimination rate, in g/L/hour.
      * @param {number} drivingLimit The limit at which you are still allowed to drive, in g/L.
@@ -78,7 +78,7 @@ export class Options {
 export class Drink {
     /**
      *
-     * @param {number} quantity Quantity in liters.
+     * @param {number} quantity Quantity in L.
      * @param {number} alcoholPercentage
      * @param {number} startedAt Started at, in milliseconds since UNIX epoc.
      */
