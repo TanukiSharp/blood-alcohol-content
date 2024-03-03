@@ -3,8 +3,6 @@ class PagesController {
         this._loadingContainerElement = document.querySelector('.page.loading');
         this._mainContainerElement = document.querySelector('.page.main');
         this._settingsContainerElement = document.querySelector('.page.settings');
-
-        console.log('------------- PagesController constructor -----------------');
     }
 
     hideLoading() {

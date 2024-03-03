@@ -1,4 +1,4 @@
-import { addEventListener } from '../lib/utils.js';
+import { addEventListener, MILLISECONDS_PER_HOUR } from '../lib/utils.js';
 
 export class DrinkComponent {
     constructor(quantity, alcoholPercentage, startedAt, userRemoveFunc, valueChangedFunc) {
@@ -37,6 +37,19 @@ export class DrinkComponent {
         } else {
             this._rootContainerElement.style.removeProperty('background-color');
         }
+    }
+
+    setTimeTo(now, timeToLimit, timeToZero) {
+        const startedAt = new Date(this._startedAtElement.value).getTime();
+        const nowMinusStartedAt = now - startedAt;
+
+        const endOfLimit = now + timeToLimit * MILLISECONDS_PER_HOUR;
+        const ratioOfLimit = nowMinusStartedAt / (endOfLimit - startedAt);
+        this._timeToLimitProgressElement.style.width = `${ratioOfLimit * 100}%`;
+
+        const endOfZero = now + timeToZero * MILLISECONDS_PER_HOUR;
+        const ratioOfZero = nowMinusStartedAt / (endOfZero - startedAt);
+        this._timeToZeroProgressElement.style.width = `${ratioOfZero * 100}%`;
     }
 
     _delete() {
@@ -119,11 +132,11 @@ export class DrinkComponent {
         this._rootContainerElement.appendChild(timeToLimitLabelElement);
 
         const timeToLimitProgressContainerElement = document.createElement('div');
-        timeToLimitProgressContainerElement.className = 'time-to limit progress container';
+        timeToLimitProgressContainerElement.className = 'time-to limit progress-container';
         this._rootContainerElement.appendChild(timeToLimitProgressContainerElement);
 
         this._timeToLimitProgressElement = document.createElement('div');
-        this._timeToLimitProgressElement.className = 'time-to limit progress bar';
+        this._timeToLimitProgressElement.className = 'time-to limit progress-bar';
         timeToLimitProgressContainerElement.appendChild(this._timeToLimitProgressElement);
 
         // ---
@@ -134,11 +147,11 @@ export class DrinkComponent {
         this._rootContainerElement.appendChild(timeToZeroLabelElement);
 
         const timeToZeroProgressContainerElement = document.createElement('div');
-        timeToZeroProgressContainerElement.className = 'time-to zero progress container';
+        timeToZeroProgressContainerElement.className = 'time-to zero progress-container';
         this._rootContainerElement.appendChild(timeToZeroProgressContainerElement);
 
         this._timeToZeroProgressElement = document.createElement('div');
-        this._timeToZeroProgressElement.className = 'time-to zero progress bar';
+        this._timeToZeroProgressElement.className = 'time-to zero progress-bar';
         timeToZeroProgressContainerElement.appendChild(this._timeToZeroProgressElement);
 
         // ---

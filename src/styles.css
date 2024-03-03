@@ -106,11 +106,11 @@ body {
     grid-template-columns: auto 1fr auto;
     grid-template-rows: repeat(5, min-content);
     grid-template-areas:
-        "quantity-label           quantity-value           quantity-hint"
-        "alcohol-percentage-label alcohol-percentage-value alcohol-percentage-hint"
-        "started-at-label         started-at-value         started-at-value"
-        "time-to-limit-label      time-to-limit-container  delete"
-        "time-to-zero-label       time-to-zero-container   delete"
+        "quantity-label           quantity-value                    quantity-hint"
+        "alcohol-percentage-label alcohol-percentage-value          alcohol-percentage-hint"
+        "started-at-label         started-at-value                  started-at-value"
+        "time-to-limit-label      time-to-limit-progress-container  delete"
+        "time-to-zero-label       time-to-zero-progress-container   delete"
         ;
     border: 1px solid gainsboro;
     border-radius: 4px;
@@ -172,16 +172,22 @@ body {
     grid-area: time-to-limit-label;
 }
 
-.page.main > .drinks-container > .drink-root-container > .time-to.limit.container {
-    grid-area: time-to-limit-container;
+.page.main > .drinks-container > .drink-root-container > .time-to.limit.progress-container {
+    grid-area: time-to-limit-progress-container;
 }
 
 .page.main > .drinks-container > .drink-root-container > .time-to.zero.label {
     grid-area: time-to-zero-label;
 }
 
-.page.main > .drinks-container > .drink-root-container > .time-to.zero.container {
-    grid-area: time-to-zero-container;
+.page.main > .drinks-container > .drink-root-container > .time-to.zero.progress-container {
+    grid-area: time-to-zero-progress-container;
+}
+
+.page.main > .drinks-container > .drink-root-container > .time-to.progress-container > .time-to.progress-bar {
+    width: 0;
+    height: 100%;
+    background-color: cornflowerblue;
 }
 
 .page.main > .drinks-container > .drink-root-container > .value {
@@ -198,7 +204,7 @@ body {
     aspect-ratio: 1 / 1;
 }
 
-.page.main > .drinks-container > .drink-root-container > .time-to.container {
+.page.main > .drinks-container > .drink-root-container > .time-to.progress-container {
     grid-column: 2 / span 2;
     background-color: white;
     border: 1px solid gray;

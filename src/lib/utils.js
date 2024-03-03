@@ -1,6 +1,6 @@
 import { localStorageEx } from './localStorage.js';
 
-const MILLISECONDS_PER_HOUR = 3600000;
+export const MILLISECONDS_PER_HOUR = 3600000;
 
 export const toHumanReadableTime = function(hours) {
     const fullHours = Math.floor(hours);

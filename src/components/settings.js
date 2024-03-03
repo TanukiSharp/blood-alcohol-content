@@ -10,7 +10,6 @@ const DEFAULT_DRIVING_LIMIT = 0.1;
 class SettingsComponent {
     constructor() {
         this._setupElements();
-        console.log('------ SettingsComponent constructor ------');
     }
 
     get bodyWeight() {

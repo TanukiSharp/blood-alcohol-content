@@ -1,3 +1,5 @@
+import { MILLISECONDS_PER_HOUR } from './utils.js';
+
 /**
  * Average human alcohol elimination rate, in g/L/hour.
  */
@@ -17,8 +19,6 @@ export const FEMALE_RHO_FACTOR = 0.58;
  * Volumic mass of ethanol, in kg/L.
  */
 const ALCOHOL_VOLUMIC_MASS = 0.798;
-
-const MILLISECONDS_PER_HOUR = 3600000;
 
 /**
  *
@@ -114,7 +114,7 @@ export const computeBloodAlcoholConcentration = function(drinks, now, options) {
     const distributionVolume = options.bodyWeight * options.rhoFactor;
 
     let totalBloodAlcoholConcentration = 0;
-    let drinkResults = [];
+    const drinkResults = [];
 
     for (const drink of drinks) {
         if (drink.startedAt > now) {
@@ -127,19 +127,19 @@ export const computeBloodAlcoholConcentration = function(drinks, now, options) {
         const bloodAlcoholConcentration = computeAlcoholConcentration(alcoholMass, distributionVolume);
         const bloodAlcoholConcentrationAtTime = computeBloodAlcoholConcentrationAtTime(bloodAlcoholConcentration, options.alcoholEliminationRate, elapsedTime);
 
-        const drinkTimeToLimit = computeTimeToZeroBloodAlcoholConcentration(Math.max(bloodAlcoholConcentration - options.drivingLimit, 0), options.alcoholEliminationRate);
-        const drinkTimeToZero = computeTimeToZeroBloodAlcoholConcentration(bloodAlcoholConcentration, options.alcoholEliminationRate);
+        const drinkTimeToLimit = computeTimeToZeroBloodAlcoholConcentration(Math.max(0, bloodAlcoholConcentrationAtTime - options.drivingLimit), options.alcoholEliminationRate);
+        const drinkTimeToZero = computeTimeToZeroBloodAlcoholConcentration(bloodAlcoholConcentrationAtTime, options.alcoholEliminationRate);
 
         drinkResults.push(new DrinkResult(drinkTimeToLimit, drinkTimeToZero));
 
         totalBloodAlcoholConcentration += bloodAlcoholConcentrationAtTime;
     }
 
-    const timeToLimit = computeTimeToZeroBloodAlcoholConcentration(Math.max(totalBloodAlcoholConcentration - options.drivingLimit, 0), options.alcoholEliminationRate);
+    const timeToLimit = computeTimeToZeroBloodAlcoholConcentration(Math.max(0, totalBloodAlcoholConcentration - options.drivingLimit), options.alcoholEliminationRate);
     const timeToZero = computeTimeToZeroBloodAlcoholConcentration(totalBloodAlcoholConcentration, options.alcoholEliminationRate);
 
     return {
-        bloodAlcoholConcentration: Math.max(totalBloodAlcoholConcentration, 0),
+        bloodAlcoholConcentration: Math.max(0, totalBloodAlcoholConcentration),
         timeToLimit,
         timeToZero,
         drinkResults,

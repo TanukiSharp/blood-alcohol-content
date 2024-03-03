@@ -115,7 +115,9 @@ class MainComponent {
 
         const result = computeBloodAlcoholConcentration(drinks, now, options);
 
-        //console.log(result);
+        for (let i = 0; i < result.drinkResults.length; i += 1) {
+            this._drinks[i].setTimeTo(now, result.drinkResults[i].timeToLimit, result.drinkResults[i].timeToZero);
+        }
 
         this._alcoholBloodConcentrationValueElement.innerText = round(result.bloodAlcoholConcentration, 2);
 
