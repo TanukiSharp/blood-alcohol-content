@@ -1,11 +1,22 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     margin: 0;
     padding: 0;
     min-height: 100dvh;
     min-width: 100dvw;
     box-sizing: border-box;
+}
+
+.page {
+    padding-left: 8px;
+    padding-top: 8px;
+}
+
+.page.loading {
+    position: fixed;
+    inset: 0;
+    background-color: white;
 }
 
 .page.main > .show-settings {
@@ -20,8 +31,6 @@ body {
     display: grid;
     position: absolute;
     inset: 0;
-    padding-left: 8px;
-    padding-top: 8px;
     row-gap: 8px;
     column-gap: 8px;
     grid-template-columns: auto auto auto 1fr;
@@ -32,6 +41,10 @@ body {
         "output-time-to-zero-label  output-time-to-zero-value  output-time-to-zero-value add-drink"
         "drinks-container           drinks-container           drinks-container          drinks-container"
         ;
+}
+
+.page.main > .drinks-container > .drink-root-container > input {
+    max-width: 80px;
 }
 
 .page.main > .output.bac.label {
@@ -146,7 +159,11 @@ body {
 .page.main > .drinks-container > .drink-root-container > .delete {
     grid-column: 3;
     grid-row: 3;
+    padding: 0;
     justify-self: end;
+    align-self: center;
+    height: 100%;
+    aspect-ratio: 1 / 1;
 }
 
 .page.main > .drinks-container > .drink-root-container > .time-to.container {
@@ -157,4 +174,12 @@ body {
 
 .page.main > .drinks-container > .drink-root-container > .time-to.label {
     font-size: 0.5em;
+}
+
+.page.settings > .close {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 5dvmax;
+    height: 5dvmax;
 }

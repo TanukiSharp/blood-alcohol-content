@@ -1,6 +1,8 @@
 import { Drink, computeBloodAlcoholConcentration, AVERAGE_HUMAN_ALCOHOL_ELIMINATION_RATE, MALE_RHO_FACTOR, FEMALE_RHO_FACTOR, Options } from './bac.js';
-import { DrinkComponent } from './drinkComponent.js';
-import uiController from './uiController.js';
+import { DrinkComponent } from './components/drink.js';
+import './components/main.js';
+import './components/settings.js';
+import pagesController from './pagesController.js';
 
 const bodyWeight = document.getElementsByClassName('body-weight')[0];
 const gender = document.getElementsByClassName('gender')[0];
@@ -16,8 +18,6 @@ const drivingLimit = document.getElementsByClassName('driving-limit')[0];
 const drinkQuantity = document.getElementsByClassName('drink-quantity')[0];
 const drinkPercent = document.getElementsByClassName('drink-percent')[0];
 const elapsedTime = document.getElementsByClassName('elapsed-time')[0];
-
-const drinksContainer = document.getElementsByClassName('drinks-container')[0];
 
 const outputBloodAlcoholConcentration = document.getElementsByClassName('output-blood-alcohol-concentration')[0];
 const outputTimeToLimit = document.getElementsByClassName('output-time-to-limit')[0];
@@ -130,12 +130,7 @@ const main = function() {
     initializeControls();
     //recompute();
 
-    let x = new DrinkComponent();
-    drinksContainer.appendChild(x.rootElement);
-    x = new DrinkComponent();
-    drinksContainer.appendChild(x.rootElement);
-    x = new DrinkComponent();
-    drinksContainer.appendChild(x.rootElement);
+    pagesController.hideLoading();
 };
 
 main();

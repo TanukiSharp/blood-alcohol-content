@@ -1,5 +1,6 @@
 export class DrinkComponent {
-    constructor() {
+    constructor(userRemoveFunc) {
+        this._userRemoveFunc = userRemoveFunc
         this._disposeFunctions = [];
         this._createElements();
     }
@@ -17,6 +18,7 @@ export class DrinkComponent {
             disposeFunction();
         }
         this._rootContainerElement.parentElement.removeChild(this._rootContainerElement);
+        this._userRemoveFunc?.();
     }
 
     _createElements() {
