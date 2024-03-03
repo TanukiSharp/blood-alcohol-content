@@ -22,6 +22,4 @@ class PagesController {
     }
 }
 
-const pagesController = new PagesController();
-
-export default pagesController;
+export const pagesController = new PagesController();

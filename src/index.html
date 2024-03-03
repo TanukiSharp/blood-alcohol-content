@@ -12,30 +12,43 @@
     <body>
         <div class="page main">
             <button class="show-settings" title="Settings..."><div>⚙️</div></button>
-            <span class="output bac label">Alcohol concentration:</span><span class="output bac value">A</span>
-            <span class="output time-to-limit label">Time to limit:</span><span class="output time-to-limit value">B</span><span class="output time-to-limit hint">MEH</span>
-            <span class="output time-to-zero label">Time to zero:</span><span class="output time-to-zero value">C</span>
+
+            <span class="output bac label">Alcohol concentration:</span>
+            <span class="output bac value"></span>
+            <span class="output bac hint">g/L</span>
+
+            <span class="output time-to-limit label">Time to limit:</span>
+            <span class="output time-to-limit value">B</span>
+            <span class="output time-to-limit hint"></span>
+
+            <span class="output time-to-zero label">Time to zero:</span>
+            <span class="output time-to-zero value">C</span>
+
             <button class="add-drink" title="Add a drink"><div>➕🍺</div></button>
+
             <div class="drinks-container"></div>
         </div>
         <div class="page settings">
-            <button class="close">X</button>
+            <div class="header">
+                <span class="version"></span>
+                <button class="close">X</button>
+            </div>
             <div class="variables">
                 <label class="body-weight label" for="body-weight">Body weight:</label>
                 <input class="body-weight value" type="number" id="body-weight"/>
-                <span class="body-weight hint">(in kg)</span>
+                <span class="body-weight hint">in kg</span>
 
                 <label class="rho-factor label" for="rho-factor">Rho factor:</label>
                 <input class="rho-factor value" type="number" id="rho-factor" step="0.001"/>
-                <span class="rho-factor hint">(in L/kg)</span>
+                <span class="rho-factor hint">in L/kg</span>
 
-                <label class="elimination-rate label" for="elimination-rate">Elimination rate:</label>
-                <input class="elimination-rate value" type="number" id="elimination-rate" step="0.001"/>
-                <span class="elimination-rate hint">(in g/L/hour)</span>
+                <label class="alcohol-elimination-rate label" for="alcohol-elimination-rate">Alcohol elimination rate:</label>
+                <input class="alcohol-elimination-rate value" type="number" id="alcohol-elimination-rate" step="0.001"/>
+                <span class="alcohol-elimination-rate hint">in g/L/hour</span>
 
                 <label class="driving-limit label" for="driving-limit">Driving limit:</label>
                 <input class="driving-limit value" type="number" id="driving-limit" step="0.1"/>
-                <span class="driving-limit hint">(in g/L)</span>
+                <span class="driving-limit hint">in g/L</span>
             </div>
             <hr/>
             <div class="info">
@@ -52,7 +65,7 @@
                         <span> L/kg</span>
                     </div>
                 </div>
-                <div class="elimination-rate">
+                <div class="alcohol-elimination-rate">
                     <span class="description">Elimination rate:</span>
                     <div class="for-human">
                         <span>Human average: </span>

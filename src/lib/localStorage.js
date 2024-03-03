@@ -4,7 +4,7 @@ class LocalStorage {
     }
 
     getItem(key) {
-        const realKey = `${this._namespace}::${key}`;
+        const realKey = `${this._namespace}:${key}`;
         const rawValue = localStorage.getItem(realKey);
 
         if (rawValue === null) {
@@ -15,7 +15,7 @@ class LocalStorage {
     }
 
     setItem(key, value) {
-        const realKey = `${this._namespace}::${key}`;
+        const realKey = `${this._namespace}:${key}`;
         const jsonValue = JSON.stringify(value);
 
         localStorage.setItem(realKey, jsonValue);

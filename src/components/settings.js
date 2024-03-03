@@ -1,6 +1,8 @@
 import { AVERAGE_HUMAN_ALCOHOL_ELIMINATION_RATE, MALE_RHO_FACTOR, FEMALE_RHO_FACTOR } from '../lib/bac.js';
 import { bindElementToLocalStorage } from '../lib/utils.js';
-import pagesController from '../pagesController.js';
+import { pagesController } from '../pagesController.js';
+
+const VERSION = 0;
 
 const DEFAULT_BODY_WEIGHT = 50;
 const DEFAULT_DRIVING_LIMIT = 0.1;
@@ -19,31 +21,43 @@ class SettingsComponent {
         return this._rhoFactor;
     }
 
-    get eliminationRate() {
-        return this._eliminationRate;
+    get alcoholEliminationRate() {
+        return this._alcoholEliminationRate;
     }
 
     get drivingLimit() {
         return this._drivingLimit;
     }
 
+    setCloseFunction(onClose) {
+        this._onClose = onClose;
+    }
+
     _setupElements() {
+        this._setupVersion();
         this._setupCloseButton();
 
         this._setupBodyWeight();
         this._setupRhoFactor();
-        this._setupEliminationRate();
+        this._setupAlcoholEliminationRate();
         this._setupDrivingLimit();
 
         this._setupDefaultRhoFactors();
-        this._setupDefaultEliminationRate();
+        this._setupDefaultAlcoholEliminationRate();
+    }
+
+    _setupVersion() {
+        const versionElement = document.querySelector('.page.settings > .header > .version');
+        versionElement.innerText = `version ${VERSION}`;
     }
 
     _setupCloseButton() {
-        const closeButtonElement = document.querySelector('.page.settings > .close');
+        const closeButtonElement = document.querySelector('.page.settings > .header > .close');
 
         closeButtonElement.addEventListener('click', () => {
             pagesController.showMain();
+            this._onClose?.();
+            this._onClose = undefined;
         });
     }
 
@@ -51,7 +65,7 @@ class SettingsComponent {
         const bodyWeightElement = document.querySelector('.page.settings > .variables > .body-weight.value');
 
         bindElementToLocalStorage(
-            'settings::body-weight',
+            'settings:body-weight',
             bodyWeightElement,
             DEFAULT_BODY_WEIGHT,
             x => Number(x),
@@ -63,7 +77,7 @@ class SettingsComponent {
         const rhoFactorElement = document.querySelector('.page.settings > .variables > .rho-factor.value');
 
         bindElementToLocalStorage(
-            'settings::rho-factor',
+            'settings:rho-factor',
             rhoFactorElement,
             FEMALE_RHO_FACTOR,
             x => Number(x),
@@ -71,15 +85,15 @@ class SettingsComponent {
         );
     }
 
-    _setupEliminationRate() {
-        const eliminationRateElement = document.querySelector('.page.settings > .variables > .elimination-rate.value');
+    _setupAlcoholEliminationRate() {
+        const alcoholEliminationRateElement = document.querySelector('.page.settings > .variables > .alcohol-elimination-rate.value');
 
         bindElementToLocalStorage(
-            'settings::elimination-rate',
-            eliminationRateElement,
+            'settings:alcohol-elimination-rate',
+            alcoholEliminationRateElement,
             AVERAGE_HUMAN_ALCOHOL_ELIMINATION_RATE,
             x => Number(x),
-            newValue => this._eliminationRate = newValue,
+            newValue => this._alcoholEliminationRate = newValue,
         );
     }
 
@@ -87,7 +101,7 @@ class SettingsComponent {
         const drivingLimitElement = document.querySelector('.page.settings > .variables > .driving-limit.value');
 
         bindElementToLocalStorage(
-            'settings::driving-limit',
+            'settings:driving-limit',
             drivingLimitElement,
             DEFAULT_DRIVING_LIMIT,
             x => Number(x),
@@ -103,9 +117,9 @@ class SettingsComponent {
         femaleElement.innerText = String(FEMALE_RHO_FACTOR);
     }
 
-    _setupDefaultEliminationRate() {
-        const eliminationRateElement = document.querySelector('.page.settings > .info > .elimination-rate > .for-human > .default-value');
-        eliminationRateElement.innerText = String(AVERAGE_HUMAN_ALCOHOL_ELIMINATION_RATE);
+    _setupDefaultAlcoholEliminationRate() {
+        const alcoholEliminationRateElement = document.querySelector('.page.settings > .info > .alcohol-elimination-rate > .for-human > .default-value');
+        alcoholEliminationRateElement.innerText = String(AVERAGE_HUMAN_ALCOHOL_ELIMINATION_RATE);
     }
 }
 

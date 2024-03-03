@@ -1,25 +1,24 @@
 import { localStorageEx } from './localStorage.js';
 
+const MILLISECONDS_PER_HOUR = 3600000;
+
 export const toHumanReadableTime = function(hours) {
     const fullHours = Math.floor(hours);
     const minutesDecimals = hours - fullHours;
-    const fullMinutes = Math.floor(60 * minutesDecimals).toString().padStart(2, '0');
+    const fullMinutes = Math.floor(60 * minutesDecimals).toString();
 
     if (fullHours > 0) {
-        return `${fullHours}h ${fullMinutes}m`;
+        return `${fullHours}h ${fullMinutes.padStart(2, '0')}m`;
     }
 
     return `${fullMinutes}m`;
 };
 
 export const toDateTime = function(hours) {
-    const newMs = Date.now() + (hours * 3600 * 1000);
+    const newMs = Date.now() + (hours * MILLISECONDS_PER_HOUR);
     const newDate = new Date(newMs);
 
-    const date = newDate.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' });
-    const time = newDate.toLocaleTimeString('ja-JP');
-
-    return `${date} ${time}`;
+    return newDate.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', hour12: false });
 };
 
 export const toDateTimeInputElementString = function(date) {

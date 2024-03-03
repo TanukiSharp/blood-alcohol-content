@@ -1,13 +1,16 @@
 import { DrinkComponent } from './drink.js';
 import { localStorageEx } from '../lib/localStorage.js';
-import { toDateTimeInputElementString } from '../lib/utils.js';
-import pagesController from '../pagesController.js';
+import { toDateTimeInputElementString, round, toHumanReadableTime, toDateTime } from '../lib/utils.js';
+import { Drink, Options, computeBloodAlcoholConcentration } from '../lib/bac.js';
+import { settingsComponent } from './settings.js';
+import { pagesController } from '../pagesController.js';
 
 class MainComponent {
     constructor() {
         this._drinks = [];
         this._setupElements();
         this._loadDrinks();
+        this._recompute();
     }
 
     _setupElements() {
@@ -15,28 +18,27 @@ class MainComponent {
 
         this._setupShowSettingsButton();
         this._setupAddDrinkButton();
+
+        this._setupAlcoholBloodConcentrationElement();
+        this._setupTimeToLimitElement();
+        this._setupTimeToZeroElement();
     }
 
     _setupShowSettingsButton() {
         const settingsButtonElement = document.querySelector('.page.main > .show-settings');
 
         settingsButtonElement.addEventListener('click', () => {
+            settingsComponent.setCloseFunction(() => {
+                this._updateTimeToLimitHint();
+                this._recompute();
+            });
             pagesController.showSettings();
         });
     }
 
-    /*
-    const drinkQuantity = document.getElementsByClassName('drink-quantity')[0];
-    const drinkPercent = document.getElementsByClassName('drink-percent')[0];
-    const elapsedTime = document.getElementsByClassName('elapsed-time')[0];
-
-    const outputBloodAlcoholConcentration = document.getElementsByClassName('output-blood-alcohol-concentration')[0];
-    const outputTimeToLimit = document.getElementsByClassName('output-time-to-limit')[0];
-    const outputTimeToZero = document.getElementsByClassName('output-time-to-zero')[0];
-    */
-
     _onDrinkValueChanged() {
         this._saveDrinks();
+        this._recompute();
     }
 
     _addDrink(quantity, alcoholPercentage, startedAt) {
@@ -63,8 +65,56 @@ class MainComponent {
         });
     }
 
+    _setupAlcoholBloodConcentrationElement() {
+        this._alcoholBloodConcentrationValueElement = document.querySelector('.page.main > .output.bac.value');
+    }
+
+    _setupTimeToLimitElement() {
+        this._timeToLimitValueElement = document.querySelector('.page.main > .output.time-to-limit.value');
+
+        this._timeToLimitHintElement = document.querySelector('.page.main > .output.time-to-limit.hint');
+        this._updateTimeToLimitHint();
+    }
+
+    _updateTimeToLimitHint() {
+        this._timeToLimitHintElement.innerText = `(${settingsComponent.drivingLimit} g/L)`;
+    }
+
+    _setupTimeToZeroElement() {
+        this._timeToZeroValueElement = document.querySelector('.page.main > .output.time-to-zero.value');
+    }
+
+    _recompute() {
+        const bodyWeight = settingsComponent.bodyWeight;
+        const rhoFactor = settingsComponent.rhoFactor;
+        const alcoholEliminationRate = settingsComponent.alcoholEliminationRate;
+        const drivingLimit = settingsComponent.drivingLimit;
+
+        const options = new Options(
+            bodyWeight,
+            rhoFactor,
+            alcoholEliminationRate,
+            drivingLimit
+        );
+
+        const drinks = this._drinks.map(component => new Drink(
+            component.quantity,
+            component.alcoholPercentage,
+            new Date(component.startedAt).getTime(),
+        ));
+
+        const result = computeBloodAlcoholConcentration(drinks, Date.now(), options);
+
+        console.log(result);
+
+        this._alcoholBloodConcentrationValueElement.innerText = round(result.bloodAlcoholConcentration, 2);
+
+        this._timeToLimitValueElement.innerText = `${toHumanReadableTime(result.timeToLimit)} (at ${toDateTime(result.timeToLimit)})`;
+        this._timeToZeroValueElement.innerText = `${toHumanReadableTime(result.timeToZero)} (at ${toDateTime(result.timeToZero)})`;
+    }
+
     _loadDrinks() {
-        const drinks = localStorageEx.getItem('drinks');
+        const drinks = localStorageEx.getItem('main:drinks');
 
         if (drinks === undefined || drinks === null || drinks.length === 0) {
             return;
@@ -86,7 +136,7 @@ class MainComponent {
             });
         }
 
-        localStorageEx.setItem('drinks', drinks);
+        localStorageEx.setItem('main:drinks', drinks);
     }
 }
 

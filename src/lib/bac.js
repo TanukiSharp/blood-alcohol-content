@@ -18,6 +18,8 @@ export const FEMALE_RHO_FACTOR = 0.58;
  */
 const ALCOHOL_VOLUMIC_MASS = 0.798;
 
+const MILLISECONDS_PER_HOUR = 3600000;
+
 /**
  *
  * @param {number} drinkQuantity Volume of the drink in L.
@@ -46,7 +48,7 @@ const computeAlcoholConcentration = function(alcoholMass, distributionVolume) {
  * @returns {number} Blood alcohol concentration at a given time, in g/L.
  */
 const computeBloodAlcoholConcentrationAtTime = function(bloodAlcoholConcentration, alcoholEliminationRate, elapsedTime) {
-    return bloodAlcoholConcentration - (elapsedTime * alcoholEliminationRate);
+    return Math.max(0, bloodAlcoholConcentration - (elapsedTime * alcoholEliminationRate));
 };
 
 /**
@@ -115,7 +117,7 @@ export const computeBloodAlcoholConcentration = function(drinks, now, options) {
     let drinkResults = [];
 
     for (const drink of drinks) {
-        const elapsedTime = now - drink.startedAt;
+        const elapsedTime = (now - drink.startedAt) / MILLISECONDS_PER_HOUR;
 
         const alcoholMass = computeAlcoholMass(drink.quantity, drink.alcoholPercentage);
         const bloodAlcoholConcentration = computeAlcoholConcentration(alcoholMass, distributionVolume);
