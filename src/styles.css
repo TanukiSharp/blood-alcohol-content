@@ -241,6 +241,7 @@ body {
 
 .page.settings > hr {
     width: 100%;
+    box-sizing: border-box;
 }
 
 .page.settings > .variables {

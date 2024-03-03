@@ -11,6 +11,8 @@ class MainComponent {
         this._setupElements();
         this._loadDrinks();
         this._recompute();
+
+        setInterval(() => this._recompute(), 1000);
     }
 
     _setupElements() {
@@ -97,15 +99,23 @@ class MainComponent {
             drivingLimit
         );
 
-        const drinks = this._drinks.map(component => new Drink(
-            component.quantity,
-            component.alcoholPercentage,
-            new Date(component.startedAt).getTime(),
-        ));
+        const now = Date.now();
 
-        const result = computeBloodAlcoholConcentration(drinks, Date.now(), options);
+        const drinks = [];
 
-        console.log(result);
+        for (const drinkComponent of this._drinks) {
+            drinkComponent.evaluateStartedAt(now);
+
+            drinks.push(new Drink(
+                drinkComponent.quantity,
+                drinkComponent.alcoholPercentage,
+                new Date(drinkComponent.startedAt).getTime(),
+            ));
+        }
+
+        const result = computeBloodAlcoholConcentration(drinks, now, options);
+
+        //console.log(result);
 
         this._alcoholBloodConcentrationValueElement.innerText = round(result.bloodAlcoholConcentration, 2);
 

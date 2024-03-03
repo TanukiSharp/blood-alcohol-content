@@ -117,6 +117,10 @@ export const computeBloodAlcoholConcentration = function(drinks, now, options) {
     let drinkResults = [];
 
     for (const drink of drinks) {
+        if (drink.startedAt > now) {
+            continue;
+        }
+
         const elapsedTime = (now - drink.startedAt) / MILLISECONDS_PER_HOUR;
 
         const alcoholMass = computeAlcoholMass(drink.quantity, drink.alcoholPercentage);

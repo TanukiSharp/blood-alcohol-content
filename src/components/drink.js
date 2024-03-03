@@ -29,6 +29,16 @@ export class DrinkComponent {
         return this._rootContainerElement;
     }
 
+    evaluateStartedAt(now) {
+        const startedAt = new Date(this._startedAtElement.value).getTime();
+
+        if (startedAt > now) {
+            this._rootContainerElement.style.backgroundColor = '#edf';
+        } else {
+            this._rootContainerElement.style.removeProperty('background-color');
+        }
+    }
+
     _delete() {
         for (const disposeFunction of this._disposeFunctions) {
             disposeFunction();
