@@ -117,10 +117,6 @@ export class DrinkComponent {
         addEventListener(this._disposeFunctions, this._startedAtElement, 'input', () => this._valueChangedFunc?.());
         this._rootContainerElement.appendChild(this._startedAtElement);
 
-        const startedAtHintElement = document.createElement('span');
-        startedAtHintElement.className = 'started-at hint';
-        this._rootContainerElement.appendChild(startedAtHintElement);
-
         // ---
 
         const timeToLimitLabelElement = document.createElement('span');
