@@ -1,4 +1,4 @@
-import { addEventListener, MILLISECONDS_PER_HOUR } from '../lib/utils.js';
+import { addEventListener, bindToLabel, MILLISECONDS_PER_HOUR } from '../lib/utils.js';
 
 export class DrinkComponent {
     constructor(quantity, alcoholPercentage, startedAt, userRemoveFunc, valueChangedFunc) {
@@ -69,14 +69,13 @@ export class DrinkComponent {
 
         const quantityLabelElement = document.createElement('label');
         quantityLabelElement.className = 'quantity label';
-        quantityLabelElement.setAttribute('for', 'quantityElement');
         quantityLabelElement.innerText = 'Drink quantity:';
         this._rootContainerElement.appendChild(quantityLabelElement);
 
         this._quantityElement = document.createElement('input');
         this._quantityElement.className = 'quantity value';
-        this._quantityElement.id = 'quantityElement';
         this._quantityElement.type = 'number';
+        bindToLabel(quantityLabelElement, this._quantityElement);
         addEventListener(this._disposeFunctions, this._quantityElement, 'input', () => this._valueChangedFunc?.());
         this._rootContainerElement.appendChild(this._quantityElement);
 
@@ -89,14 +88,13 @@ export class DrinkComponent {
 
         const alcoholPercentageLabelElement = document.createElement('label');
         alcoholPercentageLabelElement.className = 'alcohol-percentage label';
-        alcoholPercentageLabelElement.setAttribute('for', 'alcoholPercentageElement');
         alcoholPercentageLabelElement.innerText = 'Alcohol percentage:';
         this._rootContainerElement.appendChild(alcoholPercentageLabelElement);
 
         this._alcoholPercentageElement = document.createElement('input');
         this._alcoholPercentageElement.className = 'alcohol-percentage value';
-        this._alcoholPercentageElement.id = 'alcoholPercentageElement';
         this._alcoholPercentageElement.type = 'number';
+        bindToLabel(alcoholPercentageLabelElement, this._alcoholPercentageElement);
         addEventListener(this._disposeFunctions, this._alcoholPercentageElement, 'input', () => this._valueChangedFunc?.());
         this._rootContainerElement.appendChild(this._alcoholPercentageElement);
 
@@ -109,14 +107,13 @@ export class DrinkComponent {
 
         const startedAtLabelElement = document.createElement('label');
         startedAtLabelElement.className = 'started-at label';
-        startedAtLabelElement.setAttribute('for', 'startedAtElement');
         startedAtLabelElement.innerText = 'Started at:';
         this._rootContainerElement.appendChild(startedAtLabelElement);
 
         this._startedAtElement = document.createElement('input');
         this._startedAtElement.className = 'started-at value';
-        this._startedAtElement.id = 'startedAtElement';
         this._startedAtElement.type = 'datetime-local';
+        bindToLabel(startedAtLabelElement, this._startedAtElement);
         addEventListener(this._disposeFunctions, this._startedAtElement, 'input', () => this._valueChangedFunc?.());
         this._rootContainerElement.appendChild(this._startedAtElement);
 
@@ -158,6 +155,7 @@ export class DrinkComponent {
 
         this._deleteButtonElement = document.createElement('button');
         this._deleteButtonElement.className = 'delete';
+        this._deleteButtonElement.type = 'button';
         this._deleteButtonElement.innerText = '❌';
         this._deleteButtonElement.title = 'Delete current drink';
         addEventListener(this._disposeFunctions, this._deleteButtonElement, 'click', () => {

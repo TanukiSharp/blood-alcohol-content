@@ -34,7 +34,7 @@ export const toDateTimeInputElementString = function(date) {
     ];
 
     return `${dateParts.join('-')}T${timeParts.join(':')}`;
-}
+};
 
 export const round = function(value, digitCount) {
     const multiplier = Math.pow(10, digitCount);
@@ -61,4 +61,11 @@ export const bindElementToLocalStorage = function(key, element, defaultValue, co
 export const addEventListener = function(disposeFuncs, element, eventType, callback) {
     element.addEventListener(eventType, callback);
     disposeFuncs.push(() => element.removeEventListener(eventType, callback));
-}
+};
+
+export const bindToLabel = function(labelElement, inputElement) {
+    const randomId = `id${Math.floor(Math.random() * 900_000_000) + 100_000_000}${Math.floor(Math.random() * 900_000_000) + 100_000_000}`;
+
+    labelElement.setAttribute('for', randomId);
+    inputElement.id = randomId;
+};
