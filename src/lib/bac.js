@@ -91,18 +91,6 @@ export class Drink {
     }
 }
 
-export class DrinkResult {
-    /**
-     *
-     * @param {number} timeToLimit Time until you can drive.
-     * @param {number} timeToZero Time until you have no more alcohol in blood.
-     */
-    constructor(timeToLimit, timeToZero) {
-        this.timeToLimit = timeToLimit;
-        this.timeToZero = timeToZero;
-    }
-}
-
 /**
  *
  * @param {Drink[]} drinks Array of Drink instances.
@@ -114,7 +102,7 @@ export const computeBloodAlcoholConcentration = function(drinks, now, options) {
     const distributionVolume = options.bodyWeight * options.rhoFactor;
 
     let totalBloodAlcoholConcentration = 0;
-    const drinkResults = [];
+    const drinkTimeToZeroResults = [];
 
     for (const drink of drinks) {
         if (drink.startedAt > now) {
@@ -127,10 +115,9 @@ export const computeBloodAlcoholConcentration = function(drinks, now, options) {
         const bloodAlcoholConcentration = computeAlcoholConcentration(alcoholMass, distributionVolume);
         const bloodAlcoholConcentrationAtTime = computeBloodAlcoholConcentrationAtTime(bloodAlcoholConcentration, options.alcoholEliminationRate, elapsedTime);
 
-        const drinkTimeToLimit = computeTimeToZeroBloodAlcoholConcentration(Math.max(0, bloodAlcoholConcentrationAtTime - options.drivingLimit), options.alcoholEliminationRate);
         const drinkTimeToZero = computeTimeToZeroBloodAlcoholConcentration(bloodAlcoholConcentrationAtTime, options.alcoholEliminationRate);
 
-        drinkResults.push(new DrinkResult(drinkTimeToLimit, drinkTimeToZero));
+        drinkTimeToZeroResults.push(drinkTimeToZero);
 
         totalBloodAlcoholConcentration += bloodAlcoholConcentrationAtTime;
     }
@@ -142,6 +129,6 @@ export const computeBloodAlcoholConcentration = function(drinks, now, options) {
         bloodAlcoholConcentration: Math.max(0, totalBloodAlcoholConcentration),
         timeToLimit,
         timeToZero,
-        drinkResults,
+        drinkTimeToZeroResults,
     };
 };

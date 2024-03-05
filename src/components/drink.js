@@ -43,17 +43,18 @@ export class DrinkComponent {
         }
     }
 
-    setTimeTo(now, timeToLimit, timeToZero) {
+    setTimeToZero(now, timeToZero) {
         const startedAt = new Date(this._startedAtElement.value).getTime();
-        const nowMinusStartedAt = now - startedAt;
-
-        const endOfLimit = now + timeToLimit * MILLISECONDS_PER_HOUR;
-        const ratioOfLimit = nowMinusStartedAt / (endOfLimit - startedAt);
-        this._timeToLimitProgressElement.style.width = `${ratioOfLimit * 100}%`;
 
         const endOfZero = now + timeToZero * MILLISECONDS_PER_HOUR;
-        const ratioOfZero = nowMinusStartedAt / (endOfZero - startedAt);
+        const ratioOfZero = (now - startedAt) / (endOfZero - startedAt);
         this._timeToZeroProgressElement.style.width = `${ratioOfZero * 100}%`;
+
+        if (ratioOfZero >= 1) {
+            this._rootContainerElement.classList.add('done');
+        } else {
+            this._rootContainerElement.classList.remove('done');
+        }
     }
 
     _delete() {
@@ -67,7 +68,7 @@ export class DrinkComponent {
 
     _createElements() {
         this._rootContainerElement = document.createElement('div');
-        this._rootContainerElement.className = 'drink-root-container';
+        this._rootContainerElement.className = 'drink-root container';
 
         // ---
 
@@ -123,21 +124,6 @@ export class DrinkComponent {
 
         // ---
 
-        const timeToLimitLabelElement = document.createElement('span');
-        timeToLimitLabelElement.className = 'time-to limit label';
-        timeToLimitLabelElement.innerText = 'Time to limit:';
-        this._rootContainerElement.appendChild(timeToLimitLabelElement);
-
-        const timeToLimitProgressContainerElement = document.createElement('div');
-        timeToLimitProgressContainerElement.className = 'time-to limit progress-container';
-        this._rootContainerElement.appendChild(timeToLimitProgressContainerElement);
-
-        this._timeToLimitProgressElement = document.createElement('div');
-        this._timeToLimitProgressElement.className = 'time-to limit progress-bar';
-        timeToLimitProgressContainerElement.appendChild(this._timeToLimitProgressElement);
-
-        // ---
-
         const timeToZeroLabelElement = document.createElement('span');
         timeToZeroLabelElement.className = 'time-to zero label';
         timeToZeroLabelElement.innerText = 'Time to zero:';
@@ -156,7 +142,7 @@ export class DrinkComponent {
         this._deleteButtonElement = document.createElement('button');
         this._deleteButtonElement.className = 'delete';
         this._deleteButtonElement.type = 'button';
-        this._deleteButtonElement.innerText = '❌';
+        this._deleteButtonElement.innerText = '⚔️';
         this._deleteButtonElement.title = 'Delete current drink';
         addEventListener(this._disposeFunctions, this._deleteButtonElement, 'click', () => {
             this._deleteButtonElement.disabled = true;

@@ -16,7 +16,7 @@ class MainComponent {
     }
 
     _setupElements() {
-        this._drinksContainer = document.querySelector('.page.main > .drinks-container');
+        this._drinksContainer = document.querySelector('.page.main > .drinks.container');
 
         this._setupShowSettingsButton();
         this._setupAddDrinkButton();
@@ -27,7 +27,7 @@ class MainComponent {
     }
 
     _setupShowSettingsButton() {
-        const settingsButtonElement = document.querySelector('.page.main > .show-settings');
+        const settingsButtonElement = document.querySelector('.page.main > .toolbar.container > .show-settings');
 
         settingsButtonElement.addEventListener('click', () => {
             settingsComponent.setCloseFunction(() => {
@@ -62,7 +62,7 @@ class MainComponent {
     }
 
     _setupAddDrinkButton() {
-        const addDrinkButton = document.querySelector('.page.main > .add-drink');
+        const addDrinkButton = document.querySelector('.page.main > .toolbar.container > .add-drink');
 
         addDrinkButton.addEventListener('click', () => {
             this._addDrink(undefined, undefined, toDateTimeInputElementString(new Date()));
@@ -71,13 +71,13 @@ class MainComponent {
     }
 
     _setupAlcoholBloodConcentrationElement() {
-        this._alcoholBloodConcentrationValueElement = document.querySelector('.page.main > .output.bac.value');
+        this._alcoholBloodConcentrationValueElement = document.querySelector('.page.main > .output.bac > .value');
     }
 
     _setupTimeToLimitElement() {
-        this._timeToLimitValueElement = document.querySelector('.page.main > .output.time-to-limit.value');
+        this._timeToLimitValueElement = document.querySelector('.page.main > .output.time-to.limit > .value');
 
-        this._timeToLimitHintElement = document.querySelector('.page.main > .output.time-to-limit.hint');
+        this._timeToLimitHintElement = document.querySelector('.page.main > .output.time-to.limit > .hint');
         this._updateTimeToLimitHint();
     }
 
@@ -86,7 +86,7 @@ class MainComponent {
     }
 
     _setupTimeToZeroElement() {
-        this._timeToZeroValueElement = document.querySelector('.page.main > .output.time-to-zero.value');
+        this._timeToZeroValueElement = document.querySelector('.page.main > .output.time-to.zero > .value');
     }
 
     _recompute() {
@@ -118,8 +118,8 @@ class MainComponent {
 
         const result = computeBloodAlcoholConcentration(drinks, now, options);
 
-        for (let i = 0; i < result.drinkResults.length; i += 1) {
-            this._drinks[i].setTimeTo(now, result.drinkResults[i].timeToLimit, result.drinkResults[i].timeToZero);
+        for (let i = 0; i < result.drinkTimeToZeroResults.length; i += 1) {
+            this._drinks[i].setTimeToZero(now, result.drinkTimeToZeroResults[i]);
         }
 
         this._alcoholBloodConcentrationValueElement.innerText = round(result.bloodAlcoholConcentration, 2);

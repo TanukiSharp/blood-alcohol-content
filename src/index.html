@@ -11,22 +11,25 @@
     </head>
     <body>
         <div class="page main">
-            <button class="show-settings" title="Settings..." type="button"><div>⚙️</div></button>
-
-            <span class="output bac label">Alcohol concentration:</span>
-            <span class="output bac value"></span>
-            <span class="output bac hint">g/L</span>
-
-            <span class="output time-to-limit label">Time to limit:</span>
-            <span class="output time-to-limit value">B</span>
-            <span class="output time-to-limit hint"></span>
-
-            <span class="output time-to-zero label">Time to zero:</span>
-            <span class="output time-to-zero value">C</span>
-
-            <button class="add-drink" title="Add a drink" type="button"><div>➕🍺</div></button>
-
-            <div class="drinks-container"></div>
+            <div class="toolbar container">
+                <button class="show-settings" title="Settings..." type="button"><div>⚙️</div></button>
+                <button class="add-drink" title="Add a drink" type="button"><div>➕🍺</div></button>
+            </div>
+            <div class="output bac container">
+                <span class="label">Alcohol concentration:</span>
+                <span class="value"></span>
+                <span class="hint">g/L</span>
+            </div>
+            <div class="output time-to limit container">
+                <span class="label">Time to limit:</span>
+                <span class="value"></span>
+                <span class="hint"></span>
+            </div>
+            <div class="output time-to zero container">
+                <span class="label">Time to zero:</span>
+                <span class="value"></span>
+            </div>
+            <div class="drinks container"></div>
         </div>
         <div class="page settings">
             <div class="header">

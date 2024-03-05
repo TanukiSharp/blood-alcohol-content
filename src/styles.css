@@ -3,14 +3,15 @@ body {
     font-size: 1.1rem;
     margin: 0;
     padding: 0;
-    min-height: 100dvh;
-    min-width: 100dvw;
+    height: 100dvh;
+    width: 100dvw;
     box-sizing: border-box;
 }
 
 .page {
     padding-left: 8px;
     padding-top: 8px;
+    padding-right: 8px;
 }
 
 .page.loading {
@@ -19,103 +20,77 @@ body {
     background-color: white;
 }
 
-.page.main > .show-settings {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 5dvmax;
-    height: 5dvmax;
-}
-
 .page.main {
     display: grid;
     position: absolute;
     inset: 0;
-    row-gap: 16px;
+    row-gap: 12px;
     column-gap: 12px;
-    grid-template-columns: repeat(3, min-content) 1fr;
-    grid-template-rows: repeat(3, auto) 1fr;
-    grid-template-areas:
-        "output-bac-label           output-bac-value           output-bac-hint           ."
-        "output-time-to-limit-label output-time-to-limit-value output-time-to-limit-hint add-drink"
-        "output-time-to-zero-label  output-time-to-zero-value  output-time-to-zero-value add-drink"
-        "drinks-container           drinks-container           drinks-container          drinks-container"
-        ;
-    align-items: center;
+    grid-template-columns: 1fr;
+    grid-auto-flow: row;
+    grid-auto-rows: auto;
+    align-content: start;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
-.page.main > .output.value {
+.page.main > .container {
+    display: grid;
+}
+
+.page.main > .output.container {
+    display: block;
+}
+
+.page.main > .toolbar.container {
+    grid-template-columns: auto 1fr auto;
+}
+
+.page.main > .toolbar.container > .add-drink {
+    font-size: large;
+    grid-row: 1;
+    grid-column: 1;
+    justify-self: start;
+    height: 7dvmax;
+    width: 10dvmax;
+}
+
+.page.main > .toolbar.container > .show-settings {
+    font-size: large;
+    grid-row: 1;
+    grid-column: 3;
+    justify-self: end;
+    width: 7dvmax;
+    height: 7dvmax;
+}
+
+.page.main > .output.container > .value {
     font-weight: bold;
     color: royalblue;
 }
 
-.page.main > .output.bac.label {
-    grid-area: output-bac-label;
-}
-
-.page.main > .output.bac.value {
-    grid-area: output-bac-value;
-}
-
-.page.main > .output.time-to-limit.label {
-    grid-area: output-time-to-limit-label;
-}
-
-.page.main > .output.time-to-limit.value {
-    grid-area: output-time-to-limit-value;
-}
-
-.page.main > .output.time-to-limit.hint {
-    grid-area: output-time-to-limit-hint;
-}
-
-.page.main > .output.time-to-zero.label {
-    grid-area: output-time-to-zero-label;
-}
-
-.page.main > .output.time-to-zero.value {
-    grid-area: output-time-to-zero-value;
-}
-
-.page.main > .output.time-to-zero.hint {
-    grid-area: output-time-to-zero-hint;
-}
-
-.page.main > .add-drink {
-    grid-area: add-drink;
-    justify-self: end;
-    aspect-ratio: 1 / 1;
-    max-width: 100%;
-    max-height: 100%;
-}
-
-.page.main > .drinks-container {
-    display: grid;
+.page.main > .drinks.container {
     grid-auto-flow: row;
     grid-auto-rows: auto;
-    grid-area: drinks-container;
     overflow-y: scroll;
     overflow-x: visible;
     width: 100%;
-    height: 100%;
-    align-content: start;
 }
 
-.page.main > .drinks-container > .drink-root-container {
+.page.main > .drinks.container > .drink-root.container {
     display: grid;
-    grid-template-columns: auto 1fr auto;
-    grid-template-rows: repeat(5, min-content);
+    grid-template-columns: auto 1fr auto auto;
+    grid-template-rows: repeat(4, min-content);
     grid-template-areas:
-        "quantity-label           quantity-value                    quantity-hint"
-        "alcohol-percentage-label alcohol-percentage-value          alcohol-percentage-hint"
-        "started-at-label         started-at-value                  started-at-value"
-        "time-to-limit-label      time-to-limit-progress-container  delete"
-        "time-to-zero-label       time-to-zero-progress-container   delete"
+        "quantity-label           quantity-value                   quantity-hint                   delete"
+        "alcohol-percentage-label alcohol-percentage-value         alcohol-percentage-hint         ."
+        "started-at-label         started-at-value                 started-at-value                started-at-value"
+        "time-to-zero-label       time-to-zero-progress-container  time-to-zero-progress-container time-to-zero-progress-container"
         ;
     border: 1px solid gainsboro;
     border-radius: 4px;
     padding: 4px;
-    background-color: #eef8ff;
+    background-color: #ddf8ff;
     align-content: space-around;
     align-items: center;
     margin-bottom: 8px;
@@ -128,88 +103,89 @@ body {
     white-space: nowrap;
 }
 
-.page.main > .drinks-container > .drink-root-container > * {
-    margin: 4px;
+.page.main > .drinks.container > .drink-root.container.done {
+    background-color: #ddffe8;
 }
 
-.page.main > .drinks-container > .drink-root-container > .quantity.label {
+.page.main > .drinks.container > .drink-root.container > * {
+    margin: 4px;
+    width: auto; /* Fixes a fucking weird thing on mobile devices. */
+}
+
+.page.main > .drinks.container > .drink-root.container > .quantity.label {
     grid-area: quantity-label;
 }
 
-.page.main > .drinks-container > .drink-root-container > .quantity.value {
+.page.main > .drinks.container > .drink-root.container > .quantity.value {
     grid-area: quantity-value;
 }
 
-.page.main > .drinks-container > .drink-root-container > .quantity.hint {
+.page.main > .drinks.container > .drink-root.container > .quantity.hint {
     grid-area: quantity-hint;
 }
 
-.page.main > .drinks-container > .drink-root-container > .alcohol-percentage.label {
+.page.main > .drinks.container > .drink-root.container > .alcohol-percentage.label {
     grid-area: alcohol-percentage-label;
 }
 
-.page.main > .drinks-container > .drink-root-container > .alcohol-percentage.value {
+.page.main > .drinks.container > .drink-root.container > .alcohol-percentage.value {
     grid-area: alcohol-percentage-value;
 }
 
-.page.main > .drinks-container > .drink-root-container > .alcohol-percentage.hint {
+.page.main > .drinks.container > .drink-root.container > .alcohol-percentage.hint {
     grid-area: alcohol-percentage-hint;
 }
 
-.page.main > .drinks-container > .drink-root-container > .started-at.label {
+.page.main > .drinks.container > .drink-root.container > .started-at.label {
     grid-area: started-at-label;
 }
 
-.page.main > .drinks-container > .drink-root-container > .started-at.value {
+.page.main > .drinks.container > .drink-root.container > .started-at.value {
     grid-area: started-at-value;
 }
 
-.page.main > .drinks-container > .drink-root-container > .started-at.hint {
+.page.main > .drinks.container > .drink-root.container > .started-at.hint {
     grid-area: started-at-hint;
 }
 
-.page.main > .drinks-container > .drink-root-container > .time-to.limit.label {
-    grid-area: time-to-limit-label;
-}
-
-.page.main > .drinks-container > .drink-root-container > .time-to.limit.progress-container {
-    grid-area: time-to-limit-progress-container;
-}
-
-.page.main > .drinks-container > .drink-root-container > .time-to.zero.label {
+.page.main > .drinks.container > .drink-root.container > .time-to.zero.label {
     grid-area: time-to-zero-label;
 }
 
-.page.main > .drinks-container > .drink-root-container > .time-to.zero.progress-container {
+.page.main > .drinks.container > .drink-root.container > .time-to.zero.progress-container {
     grid-area: time-to-zero-progress-container;
 }
 
-.page.main > .drinks-container > .drink-root-container > .time-to.progress-container > .time-to.progress-bar {
+.page.main > .drinks.container > .drink-root.container > .time-to.progress-container {
+    min-width: 40px;
+}
+
+.page.main > .drinks.container > .drink-root.container > .time-to.progress-container > .time-to.progress-bar {
     width: 0;
     height: 100%;
     background-color: cornflowerblue;
 }
 
-.page.main > .drinks-container > .drink-root-container > .value {
+.page.main > .drinks.container > .drink-root.container > .value {
     font-size: 1.5rem;
-    min-height: 40px;
+    min-height: 30px;
     min-width: 40px;
 }
 
-.page.main > .drinks-container > .drink-root-container > .delete {
+.page.main > .drinks.container > .drink-root.container > .delete {
     grid-area: delete;
     justify-self: end;
     align-self: stretch;
     aspect-ratio: 1 / 1;
 }
 
-.page.main > .drinks-container > .drink-root-container > .time-to.progress-container {
+.page.main > .drinks.container > .drink-root.container > .time-to.progress-container {
     background-color: white;
     border: 1px solid gray;
     align-self: stretch;
 }
 
-.page.main > .drinks-container > .drink-root-container > .time-to.label {
+.page.main > .drinks.container > .drink-root.container > .time-to.label {
     font-size: 0.5em;
 }
 
@@ -218,7 +194,7 @@ body {
     grid-auto-flow: row;
     grid-auto-rows: auto;
     row-gap: 8px;
-    padding-top: 0;
+    padding-top: 8px;
 }
 
 .page.settings > .header {
@@ -232,9 +208,10 @@ body {
 }
 
 .page.settings > .header > .close {
+    font-size: x-large;
     grid-row: 1;
-    width: 5dvmax;
-    height: 5dvmax;
+    width: 7dvmax;
+    height: 7dvmax;
     justify-self: end;
 }
 
@@ -264,7 +241,7 @@ body {
 
 .page.settings > .variables > .value {
     max-width: 80px;
-    min-height: 40px;
+    min-height: 30px;
     font-size: 1.5rem;
 }
 
