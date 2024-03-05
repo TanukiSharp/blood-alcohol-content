@@ -49,6 +49,7 @@ class MainComponent {
         const onRemove = () => {
             const index = this._drinks.indexOf(drink);
             this._drinks.splice(index, 1);
+            this._numberDrinks();
             this._saveDrinks();
         };
 
@@ -56,6 +57,8 @@ class MainComponent {
 
         this._drinks.push(drink);
         this._drinksContainer.appendChild(drink.rootElement);
+
+        this._numberDrinks();
     }
 
     _setupAddDrinkButton() {
@@ -123,6 +126,12 @@ class MainComponent {
 
         this._timeToLimitValueElement.innerText = `${toHumanReadableTime(result.timeToLimit)} (at ${toDateTime(result.timeToLimit)})`;
         this._timeToZeroValueElement.innerText = `${toHumanReadableTime(result.timeToZero)} (at ${toDateTime(result.timeToZero)})`;
+    }
+
+    _numberDrinks() {
+        for (let i = 0; i < this._drinks.length; i += 1) {
+            this._drinks[i].setDrinkNumber(i + 1);
+        }
     }
 
     _loadDrinks() {

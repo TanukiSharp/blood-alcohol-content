@@ -29,6 +29,10 @@ export class DrinkComponent {
         return this._rootContainerElement;
     }
 
+    setDrinkNumber(num) {
+        this._quantityLabelElement.innerText = `Drink ${num} quantity:`;
+    }
+
     evaluateStartedAt(now) {
         const startedAt = new Date(this._startedAtElement.value).getTime();
 
@@ -67,15 +71,15 @@ export class DrinkComponent {
 
         // ---
 
-        const quantityLabelElement = document.createElement('label');
-        quantityLabelElement.className = 'quantity label';
-        quantityLabelElement.innerText = 'Drink quantity:';
-        this._rootContainerElement.appendChild(quantityLabelElement);
+        this._quantityLabelElement = document.createElement('label');
+        this._quantityLabelElement.className = 'quantity label';
+        this._quantityLabelElement.innerText = 'Drink quantity:';
+        this._rootContainerElement.appendChild(this._quantityLabelElement);
 
         this._quantityElement = document.createElement('input');
         this._quantityElement.className = 'quantity value';
         this._quantityElement.type = 'number';
-        bindToLabel(quantityLabelElement, this._quantityElement);
+        bindToLabel(this._quantityLabelElement, this._quantityElement);
         addEventListener(this._disposeFunctions, this._quantityElement, 'input', () => this._valueChangedFunc?.());
         this._rootContainerElement.appendChild(this._quantityElement);
 
