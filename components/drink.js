@@ -11,6 +11,8 @@ export class DrinkComponent {
         this._quantityElement.value = quantity;
         this._alcoholPercentageElement.value = alcoholPercentage;
         this._startedAtElement.value = startedAt;
+
+        this.setTimeToZero(0, 0);
     }
 
     get quantity() {
@@ -47,7 +49,7 @@ export class DrinkComponent {
         const startedAt = new Date(this._startedAtElement.value).getTime();
 
         const endOfZero = now + timeToZero * MILLISECONDS_PER_HOUR;
-        const ratioOfZero = (now - startedAt) / (endOfZero - startedAt);
+        const ratioOfZero = Math.min((now - startedAt) / (endOfZero - startedAt), 100);
         this._timeToZeroProgressElement.style.width = `${ratioOfZero * 100}%`;
 
         if (ratioOfZero >= 1) {

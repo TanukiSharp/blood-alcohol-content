@@ -124,8 +124,16 @@ class MainComponent {
 
         this._alcoholBloodConcentrationValueElement.innerText = round(result.bloodAlcoholConcentration, 2);
 
-        this._timeToLimitValueElement.innerText = `${toHumanReadableTime(result.timeToLimit)} (at ${toDateTime(result.timeToLimit)})`;
-        this._timeToZeroValueElement.innerText = `${toHumanReadableTime(result.timeToZero)} (at ${toDateTime(result.timeToZero)})`;
+        this._timeToLimitValueElement.innerText = this._timeToDisplayString(result.timeToLimit);
+        this._timeToZeroValueElement.innerText = this._timeToDisplayString(result.timeToZero);
+    }
+
+    _timeToDisplayString(timeTo) {
+        if (timeTo <= 0) {
+            return '-';
+        }
+
+        return `${toHumanReadableTime(timeTo)} (at ${toDateTime(timeTo)})`
     }
 
     _numberDrinks() {

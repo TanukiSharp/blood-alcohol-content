@@ -21,6 +21,7 @@ body {
 }
 
 .page.main {
+    font-size: 1.17rem;
     display: grid;
     position: absolute;
     inset: 0;
@@ -173,7 +174,7 @@ body {
 }
 
 .page.main > .drinks.container > .drink-root.container > .value {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     min-height: 30px;
     min-width: 40px;
 }
