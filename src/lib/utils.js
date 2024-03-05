@@ -18,7 +18,7 @@ export const toDateTime = function(hours) {
     const newMs = Date.now() + (hours * MILLISECONDS_PER_HOUR);
     const newDate = new Date(newMs);
 
-    return newDate.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', hour12: false });
+    return newDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
 };
 
 export const toDateTimeInputElementString = function(date) {
