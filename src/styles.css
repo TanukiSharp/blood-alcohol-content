@@ -47,7 +47,6 @@ body {
 }
 
 .page.main > .toolbar.container > .add-drink {
-    font-size: large;
     grid-row: 1;
     grid-column: 1;
     justify-self: start;
@@ -55,13 +54,22 @@ body {
     width: 10dvmax;
 }
 
+.page.main > .toolbar.container > .add-drink > * {
+    margin: -1px;
+    transform: scale(1.7);
+}
+
 .page.main > .toolbar.container > .show-settings {
-    font-size: large;
     grid-row: 1;
     grid-column: 3;
     justify-self: end;
     width: 7dvmax;
     height: 7dvmax;
+}
+
+.page.main > .toolbar.container > .show-settings > * {
+    margin: -1px;
+    transform: scale(1.7);
 }
 
 .page.main > .output.container > .value {
@@ -179,6 +187,11 @@ body {
     aspect-ratio: 1 / 1;
 }
 
+.page.main > .drinks.container > .drink-root.container > .delete > * {
+    margin: -1px;
+    transform: scale(1.3);
+}
+
 .page.main > .drinks.container > .drink-root.container > .time-to.progress-container {
     background-color: white;
     border: 1px solid gray;
@@ -186,7 +199,7 @@ body {
 }
 
 .page.main > .drinks.container > .drink-root.container > .time-to.label {
-    font-size: 0.5em;
+    font-size: 0.7em;
 }
 
 .page.settings {

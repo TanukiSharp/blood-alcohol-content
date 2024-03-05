@@ -139,10 +139,13 @@ export class DrinkComponent {
 
         // ---
 
+        const deleteButtonContentElement = document.createElement('div');
+        deleteButtonContentElement.innerText = '⚔️';
+
         this._deleteButtonElement = document.createElement('button');
         this._deleteButtonElement.className = 'delete';
         this._deleteButtonElement.type = 'button';
-        this._deleteButtonElement.innerText = '⚔️';
+        this._deleteButtonElement.appendChild(deleteButtonContentElement);
         this._deleteButtonElement.title = 'Delete current drink';
         addEventListener(this._disposeFunctions, this._deleteButtonElement, 'click', () => {
             this._deleteButtonElement.disabled = true;
