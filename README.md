@@ -4,6 +4,8 @@ This project is a web-based blood alcohol content calculator.
 
 Most of information needed to understand the (easy) math can be found here: https://en.wikipedia.org/wiki/Blood_alcohol_content
 
+⚠️ Please have a look at the warning section at the end of this document.
+
 ## Web application
 
 The web application can be found here: https://tanukisharp.github.io/blood-alcohol-content
@@ -69,3 +71,9 @@ At this time, all the drink entries below should be green, and you can remove th
 Hereafter is an example of the main page:
 
 ![Main page](./docs/main-page.png)
+
+## ⚠️ Warning ⚠️
+
+Remember that this application and computations behind are for indication purpose and cannot be in anyway perfectly accurate.
+
+Drive carefully, and simply avoid driving after drinking.
