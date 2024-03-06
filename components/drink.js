@@ -49,7 +49,7 @@ export class DrinkComponent {
         const startedAt = new Date(this._startedAtElement.value).getTime();
 
         const endOfZero = now + timeToZero * MILLISECONDS_PER_HOUR;
-        const ratioOfZero = Math.min((now - startedAt) / (endOfZero - startedAt), 100);
+        const ratioOfZero = Math.min((now - startedAt) / (endOfZero - startedAt), 1);
         this._timeToZeroProgressElement.style.width = `${ratioOfZero * 100}%`;
 
         if (ratioOfZero >= 1) {
