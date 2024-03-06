@@ -12,7 +12,7 @@ class MainComponent {
         this._loadDrinks();
         this._recompute();
 
-        setInterval(() => this._recompute(), 1000);
+        setInterval(() => this._recompute(), 10000);
     }
 
     _setupElements() {
