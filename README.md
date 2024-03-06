@@ -20,11 +20,11 @@ The first thing to do is to do a bit of setup. For that, click on the settings b
 
 ![Settings button](./docs/settings-button.png)
 
-Then set your `Body weight`, and yur `Rho factor`. The women average is 0.58and the men average is 0.71, as indicated on the settings page.
+Then set your `Body weight`, and your `Rho factor`. The women average is 0.58 and the men average is 0.71, as indicated on the settings page.
 
 As for the `Alcohol elimination rate`, you can let the default value, unless you know what you are doing.
 
-You can also set the `Driving limit` to the regulation where you drive, but feel free to set it lower if you want.
+You can also set the `Driving limit` to the regulation value where you drive, but feel free to set it lower if you want.
 
 ### Main page
 
@@ -34,33 +34,35 @@ Then add a drink by clicking on the following button:
 
 A drink entry appears below. Set the `Drink quantity`, in liters, and the `Alcohol percentage` in percentage of alcohol contained in the drink.
 
-When a drink is add, the `Started at` date and time is automatically set to now, but you can tweak it if you started to drink before entering values.
+When a drink is added, the `Started at` date and time are automatically set to now, but you can tweak it if you started to drink before entering values.
 
 Click on the crossed swords button to remove a drink.
 
 ![Remove drink button](./docs/remove-drink-button.png)
 
-On a drink entry, the `Time to zero` is the progression of the elimination of the alcohol. When the bar is full, the alcohol contained in the drink is completely eliminated and the entry turns green. At this moment, you can remove it, because it does not affect your alcohol concentration anymore.
+On a drink entry, the `Time to zero` is the progression of the alcohol elimination. When the bar is full, the alcohol contained in the drink is completely eliminated by your body, and the entry turns green. At this moment, you can remove it, because it does not affect your alcohol concentration anymore.
 
 Note that a drink with the `Started at` value set in the future turns purple, and is not taken into account to compute your alcohol concentration.
 
 An effective drink has a blue background.
 
-At the top of the page, there are three main textual indicators.
+At the top of the page, there are three main textual indicators and hereafter are their descriptions.
 
 `Alcohol concentration`
 
-This represent the amount of pure alcohol in your blood at the moment, in grams of pure alcohol per liter of blood. Of course this is not entirely true, because people drink overtime, and even if you drink bottoms up, it takes a bit of time for alcohol to be absorbed, so this value makes more sense in the long run.
+This represents the amount of pure alcohol in your blood at the moment, in grams of pure alcohol per liter of blood. Of course this is not entirely true, because people drink overtime, and even if you drink bottoms up, it takes a bit of time for alcohol to be absorbed, so this value makes more sense in the long run.
 
 `Time to limit`
 
-This represents the time until your alcohol concentration reaches the `Driving limit` you have set in the settings page.
+This represents the time until your alcohol concentration reaches the `Driving limit` you have set in the settings page. In short, this tells you when you can drive.
+
+The driving limit value set in the settings page is indicated in parentheses beside the `Time to limit` value.
 
 Note that if you set this limit to zero or lower, the `Time to limit` indicator disappears from the page.
 
 `Time to zero`
 
-This represents the time until your alcohol concentration reaches zero grams of alcohol per liter of blood. In other words, this is when you body fully eliminated all the alcohol you drunk.
+This represents the time until your alcohol concentration reaches zero grams of alcohol per liter of blood. In other words, this is when your body fully eliminated all the alcohol you have drunk.
 
 At this time, all the drink entries below should be green, and you can remove them all and drive safely.
 
