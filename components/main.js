@@ -75,6 +75,8 @@ class MainComponent {
     }
 
     _setupTimeToLimitElement() {
+        this._timeToLimitContainerElement = document.querySelector('.page.main > .output.time-to.limit');
+
         this._timeToLimitValueElement = document.querySelector('.page.main > .output.time-to.limit > .value');
 
         this._timeToLimitHintElement = document.querySelector('.page.main > .output.time-to.limit > .hint');
@@ -82,7 +84,12 @@ class MainComponent {
     }
 
     _updateTimeToLimitHint() {
+        if (settingsComponent.drivingLimit > 0) {
             this._timeToLimitHintElement.innerText = `(${settingsComponent.drivingLimit} g/L)`;
+            this._timeToLimitContainerElement.style.removeProperty('display');
+        } else {
+            this._timeToLimitContainerElement.style.display = 'none';
+        }
     }
 
     _setupTimeToZeroElement() {
