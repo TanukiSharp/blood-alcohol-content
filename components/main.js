@@ -82,7 +82,7 @@ class MainComponent {
     }
 
     _updateTimeToLimitHint() {
-        this._timeToLimitHintElement.innerText = `(${settingsComponent.drivingLimit} g/L)`;
+            this._timeToLimitHintElement.innerText = `(${settingsComponent.drivingLimit} g/L)`;
     }
 
     _setupTimeToZeroElement() {
@@ -119,7 +119,9 @@ class MainComponent {
         const result = computeBloodAlcoholConcentration(drinks, now, options);
 
         for (let i = 0; i < result.drinkTimeToZeroResults.length; i += 1) {
-            this._drinks[i].setTimeToZero(now, result.drinkTimeToZeroResults[i]);
+            if (result.drinkTimeToZeroResults[i] !== null) {
+                this._drinks[i].setTimeToZero(now, result.drinkTimeToZeroResults[i]);
+            }
         }
 
         this._alcoholBloodConcentrationValueElement.innerText = round(result.bloodAlcoholConcentration, 2);
