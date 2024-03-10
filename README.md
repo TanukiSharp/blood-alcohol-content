@@ -10,11 +10,11 @@ Most of information needed to understand the (easy) math can be found here: http
 
 The web application can be found here: https://tanukisharp.github.io/blood-alcohol-content
 
-## How to run
+## How to run (for developers)
 
 When working locally for development purpose, just spawn a local web server where the `index.js` is located and open a browser to the hosting address and port.
 
-## How to use
+## How to use (for users)
 
 ### Settings
 
@@ -27,6 +27,8 @@ Then set your `Body weight`, and your `Rho factor`. The women average is 0.58 an
 As for the `Alcohol elimination rate`, you can let the default value, unless you know what you are doing.
 
 You can also set the `Driving limit` to the regulation value where you drive, but feel free to set it lower if you want.
+
+Your settings are stored in the browser's local storage, so if you refresh the page or close it and reopen it later, your settings are maintained, but if you use another browser or uninstall it and reinstall it, or clean it's local storage data, you will have to setup the application again.
 
 ### Main page
 
@@ -47,6 +49,8 @@ On a drink entry, the `Time to zero` is the progression of the alcohol eliminati
 Note that a drink with the `Started at` value set in the future turns purple, and is not taken into account to compute your alcohol concentration.
 
 An effective drink has a blue background.
+
+Also note that drink data is stored in the browser's local storage alongside your settings, so this data remain if you refresh the page or close and reopen your browser.
 
 At the top of the page, there are three main textual indicators and hereafter are their descriptions.
 
