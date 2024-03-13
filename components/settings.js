@@ -2,7 +2,7 @@ import { AVERAGE_HUMAN_ALCOHOL_ELIMINATION_RATE, MALE_RHO_FACTOR, FEMALE_RHO_FAC
 import { bindElementToLocalStorage } from '../lib/utils.js';
 import { pagesController } from '../pagesController.js';
 
-const VERSION = 0;
+const VERSION = 1;
 
 const DEFAULT_BODY_WEIGHT = 50;
 const DEFAULT_DRIVING_LIMIT = 0.1;
