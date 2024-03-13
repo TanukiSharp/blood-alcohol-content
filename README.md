@@ -1,5 +1,8 @@
 # Overview
 
+> [!CAUTION]
+> If you ran into this project by mistake, DO NTO use it, it has a severe issue.
+
 This project is a web-based blood alcohol content calculator.
 
 Most of information needed to understand the (easy) math can be found here: https://en.wikipedia.org/wiki/Blood_alcohol_content
