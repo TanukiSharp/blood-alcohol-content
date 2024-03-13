@@ -10,12 +10,15 @@ const DEBUG = false;
 class MainComponent {
     constructor() {
         const debugCanvas = document.querySelector('.page.main > .debug');
-        this._debug = debugCanvas.getContext('2d');
-        this._debugTime = 0;
-        this._debugPrevBac = -1;
-        this._debug.canvas.width = this._debug.canvas.clientWidth;
-        this._debug.canvas.height = this._debug.canvas.clientHeight;
-        this._debugNow = (new Date(2024, 2, 10, 22, 16, 55)).getTime();
+        if (DEBUG) {
+            this._debug = debugCanvas.getContext('2d');
+            this._debugTime = 0;
+            this._debugPrevBac = -1;
+            this._debug.canvas.width = this._debug.canvas.clientWidth;
+            this._debug.canvas.height = this._debug.canvas.clientHeight;
+        } else {
+            debugCanvas.style.display = 'none';
+        }
 
         this._lastBloodAlcoholConcentration = 0;
         this._drinks = [];
@@ -166,16 +169,19 @@ class MainComponent {
             this._drinks[i].setEliminationRatio(result.drinkEliminationRatios[i]);
         }
 
-        if (this._debugPrevBac < 0) {
+        if (DEBUG) {
+            if (this._debugPrevBac < 0) {
+                this._debugPrevBac = result.bloodAlcoholConcentration;
+            }
+
+            const bacResolution = 200;
+            this._debug.moveTo(this._debugTime, this._debug.canvas.clientHeight - this._debugPrevBac * bacResolution - 1);
+            this._debugTime += 1.5;
+            this._debug.lineTo(this._debugTime, this._debug.canvas.clientHeight - result.bloodAlcoholConcentration * bacResolution - 1);
+            this._debug.stroke();
             this._debugPrevBac = result.bloodAlcoholConcentration;
         }
 
-        const bacResolution = 200;
-        this._debug.moveTo(this._debugTime, this._debug.canvas.clientHeight - this._debugPrevBac * bacResolution - 1);
-        this._debugTime += 1.5;
-        this._debug.lineTo(this._debugTime, this._debug.canvas.clientHeight - result.bloodAlcoholConcentration * bacResolution - 1);
-        this._debug.stroke();
-        this._debugPrevBac = result.bloodAlcoholConcentration;
         this._lastBloodAlcoholConcentration = result.bloodAlcoholConcentration;
 
         this._alcoholBloodConcentrationValueElement.innerText = round(result.bloodAlcoholConcentration, 2);
