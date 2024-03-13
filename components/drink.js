@@ -31,17 +31,41 @@ export class DrinkComponent {
         return this._rootContainerElement;
     }
 
+    isValid(now) {
+        if (this.quantity <= 0 || this.alcoholPercentage <= 0) {
+            return false;
+        }
+
+        const startedAt = new Date(this.startedAt).getTime();
+
+        if (startedAt > now) {
+            return false;
+        }
+
+        return true;
+    }
+
     setDrinkNumber(num) {
         this._quantityLabelElement.innerText = `Drink ${num} quantity:`;
     }
 
-    evaluateStartedAt(now) {
-        const startedAt = new Date(this._startedAtElement.value).getTime();
-
-        if (startedAt > now) {
+    evaluateParameters(now) {
+        if (this.isValid(now) === false) {
             this._rootContainerElement.style.backgroundColor = '#edf';
+            return false;
         } else {
             this._rootContainerElement.style.removeProperty('background-color');
+            return true;
+        }
+    }
+
+    setEliminationRatio(ratio) {
+        this._timeToZeroProgressElement.style.width = `${ratio * 100}%`;
+
+        if (ratio >= 1) {
+            this._rootContainerElement.classList.add('done');
+        } else {
+            this._rootContainerElement.classList.remove('done');
         }
     }
 

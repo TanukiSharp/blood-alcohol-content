@@ -5,14 +5,33 @@ import { Drink, Options, computeBloodAlcoholConcentration } from '../lib/bac.js'
 import { settingsComponent } from './settings.js';
 import { pagesController } from '../pagesController.js';
 
+const DEBUG = false;
+
 class MainComponent {
     constructor() {
+        const debugCanvas = document.querySelector('.page.main > .debug');
+        this._debug = debugCanvas.getContext('2d');
+        this._debugTime = 0;
+        this._debugPrevBac = -1;
+        this._debug.canvas.width = this._debug.canvas.clientWidth;
+        this._debug.canvas.height = this._debug.canvas.clientHeight;
+        this._debugNow = (new Date(2024, 2, 10, 22, 16, 55)).getTime();
+
         this._drinks = [];
         this._setupElements();
         this._loadDrinks();
         this._recompute();
 
-        setInterval(() => this._recompute(), 10000);
+        if (DEBUG) {
+            this._debugNow = (new Date(2024, 2, 10, 22, 16, 55)).getTime();
+            for (let i = 0; i < 800; i += 1) {
+                this._recompute();
+                this._debugNow += 1000;
+            }
+        } else {
+            this._debugNow = Date.now();
+            setInterval(() => this._recompute(), 1000);
+        }
     }
 
     _setupElements() {
@@ -109,12 +128,18 @@ class MainComponent {
             drivingLimit
         );
 
-        const now = Date.now();
+        let now;
+        if (DEBUG) {
+            now = this._debugNow;
+        } else {
+            now = Date.now();
+        }
 
         const drinks = [];
 
         for (const drinkComponent of this._drinks) {
-            drinkComponent.evaluateStartedAt(now);
+            drinkComponent.evaluateParameters(now);
+            drinkComponent.setEliminationRatio(0);
 
             drinks.push(new Drink(
                 drinkComponent.quantity,
@@ -125,11 +150,24 @@ class MainComponent {
 
         const result = computeBloodAlcoholConcentration(drinks, now, options);
 
-        for (let i = 0; i < result.drinkTimeToZeroResults.length; i += 1) {
-            if (result.drinkTimeToZeroResults[i] !== null) {
-                this._drinks[i].setTimeToZero(now, result.drinkTimeToZeroResults[i]);
-            }
+        if (result === null) {
+            return;
         }
+
+        for (let i = 0; i < result.drinkEliminationRatios.length; i += 1) {
+            this._drinks[i].setEliminationRatio(result.drinkEliminationRatios[i]);
+        }
+
+        if (this._debugPrevBac < 0) {
+            this._debugPrevBac = result.bloodAlcoholConcentration;
+        }
+
+        const bacResolution = 200;
+        this._debug.moveTo(this._debugTime, this._debug.canvas.clientHeight - this._debugPrevBac * bacResolution - 1);
+        this._debugTime += 1.5;
+        this._debug.lineTo(this._debugTime, this._debug.canvas.clientHeight - result.bloodAlcoholConcentration * bacResolution - 1);
+        this._debug.stroke();
+        this._debugPrevBac = result.bloodAlcoholConcentration;
 
         this._alcoholBloodConcentrationValueElement.innerText = round(result.bloodAlcoholConcentration, 2);
 

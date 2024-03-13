@@ -8,6 +8,15 @@ body {
     box-sizing: border-box;
 }
 
+
+.page.main > .debug {
+    background-color: whitesmoke;
+    border: 1px gray solid;
+    width: 100%;
+    height: 160px;
+}
+
+
 .page {
     padding-left: 8px;
     padding-top: 8px;
