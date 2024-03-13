@@ -84,11 +84,23 @@ export class DrinkComponent {
     }
 
     _delete() {
+        const cancellable = {
+            isCancelled: false,
+        }
+
+        this._userRemoveFunc?.(cancellable);
+
+        if (cancellable.isCancelled) {
+            this._deleteButtonElement.disabled = false;
+            return;
+        }
+
         for (const disposeFunction of this._disposeFunctions) {
             disposeFunction();
         }
+
         this._rootContainerElement.parentElement.removeChild(this._rootContainerElement);
-        this._userRemoveFunc?.();
+
         this._valueChangedFunc?.();
     }
 

@@ -17,6 +17,7 @@ class MainComponent {
         this._debug.canvas.height = this._debug.canvas.clientHeight;
         this._debugNow = (new Date(2024, 2, 10, 22, 16, 55)).getTime();
 
+        this._lastBloodAlcoholConcentration = 0;
         this._drinks = [];
         this._setupElements();
         this._loadDrinks();
@@ -65,7 +66,14 @@ class MainComponent {
     _addDrink(quantity, alcoholPercentage, startedAt) {
         let drink;
 
-        const onRemove = () => {
+        const onRemove = (cancellable) => {
+            if (DEBUG === false && this._lastBloodAlcoholConcentration > 0) {
+                if (prompt('Are you sure you want to delete this drink ?\nIt may end up in a completely wrong computation.\n\nType \'yes\' to confirm drink deletion.')?.toLocaleLowerCase() !== 'yes') {
+                    cancellable.isCancelled = true;
+                    return;
+                }
+            }
+
             const index = this._drinks.indexOf(drink);
             this._drinks.splice(index, 1);
             this._numberDrinks();
@@ -168,6 +176,7 @@ class MainComponent {
         this._debug.lineTo(this._debugTime, this._debug.canvas.clientHeight - result.bloodAlcoholConcentration * bacResolution - 1);
         this._debug.stroke();
         this._debugPrevBac = result.bloodAlcoholConcentration;
+        this._lastBloodAlcoholConcentration = result.bloodAlcoholConcentration;
 
         this._alcoholBloodConcentrationValueElement.innerText = round(result.bloodAlcoholConcentration, 2);
 
