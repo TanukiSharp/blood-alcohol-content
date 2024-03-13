@@ -184,6 +184,10 @@ body {
     background-color: cornflowerblue;
 }
 
+.page.main > .drinks.container > .drink-root.container > .time-to {
+    display: none !important;
+}
+
 .page.main > .drinks.container > .drink-root.container > .value {
     font-size: 1.3rem;
     min-height: 30px;

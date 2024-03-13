@@ -60,27 +60,27 @@ export class DrinkComponent {
     }
 
     setEliminationRatio(ratio) {
-        this._timeToZeroProgressElement.style.width = `${ratio * 100}%`;
+        // this._timeToZeroProgressElement.style.width = `${ratio * 100}%`;
 
-        if (ratio >= 1) {
-            this._rootContainerElement.classList.add('done');
-        } else {
-            this._rootContainerElement.classList.remove('done');
-        }
+        // if (ratio >= 1) {
+        //     this._rootContainerElement.classList.add('done');
+        // } else {
+        //     this._rootContainerElement.classList.remove('done');
+        // }
     }
 
     setTimeToZero(now, timeToZero) {
-        const startedAt = new Date(this._startedAtElement.value).getTime();
+        // const startedAt = new Date(this._startedAtElement.value).getTime();
 
-        const endOfZero = now + timeToZero * MILLISECONDS_PER_HOUR;
-        const ratioOfZero = Math.min((now - startedAt) / (endOfZero - startedAt), 1);
-        this._timeToZeroProgressElement.style.width = `${ratioOfZero * 100}%`;
+        // const endOfZero = now + timeToZero * MILLISECONDS_PER_HOUR;
+        // const ratioOfZero = Math.min((now - startedAt) / (endOfZero - startedAt), 1);
+        // this._timeToZeroProgressElement.style.width = `${ratioOfZero * 100}%`;
 
-        if (ratioOfZero >= 1) {
-            this._rootContainerElement.classList.add('done');
-        } else {
-            this._rootContainerElement.classList.remove('done');
-        }
+        // if (ratioOfZero >= 1) {
+        //     this._rootContainerElement.classList.add('done');
+        // } else {
+        //     this._rootContainerElement.classList.remove('done');
+        // }
     }
 
     _delete() {
