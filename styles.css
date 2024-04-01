@@ -9,11 +9,16 @@ body {
 }
 
 
-.page.main > .debug {
+.page.main > .debug.canvas {
     background-color: whitesmoke;
     border: 1px gray solid;
-    width: 100%;
-    height: 160px;
+    /* width: 100%;
+    height: 160px; */
+}
+
+.page.main > .toolbar.container > .debug.time {
+    grid-column: 2;
+    margin: 8px;
 }
 
 
@@ -27,6 +32,10 @@ body {
     position: fixed;
     inset: 0;
     background-color: white;
+}
+
+.page.loading.collapsed {
+    display: none;
 }
 
 .page.main {
@@ -43,12 +52,20 @@ body {
     align-content: start;
 }
 
+.page.main.collapsed {
+    display: none;
+}
+
 .page.main > .container {
     display: grid;
 }
 
 .page.main > .output.container {
     display: block;
+}
+
+.page.main > .output.time-to.limit.container.collapsed {
+    display: none;
 }
 
 .page.main > .toolbar.container {
@@ -100,15 +117,15 @@ body {
     grid-template-columns: auto 1fr auto auto;
     grid-template-rows: repeat(4, min-content);
     grid-template-areas:
-        "quantity-label           quantity-value                   quantity-hint                   delete"
-        "alcohol-percentage-label alcohol-percentage-value         alcohol-percentage-hint         ."
-        "started-at-label         started-at-value                 started-at-value                started-at-value"
-        "time-to-zero-label       time-to-zero-progress-container  time-to-zero-progress-container time-to-zero-progress-container"
+        "quantity-label                    quantity-value                    quantity-hint                     delete"
+        "alcohol-percentage-label          alcohol-percentage-value          alcohol-percentage-hint           ."
+        "started-at-label                  started-at-value                  started-at-value                  started-at-value"
+        "blood-alcohol-concentration-label blood-alcohol-concentration-value blood-alcohol-concentration-hint  ."
         ;
     border: 1px solid gainsboro;
     border-radius: 4px;
     padding: 4px;
-    background-color: #ddf8ff;
+    background-color: #ddffe8;
     align-content: space-around;
     align-items: center;
     margin-bottom: 8px;
@@ -121,8 +138,12 @@ body {
     white-space: nowrap;
 }
 
-.page.main > .drinks.container > .drink-root.container.done {
-    background-color: #ddffe8;
+.page.main > .drinks.container > .drink-root.container.is-invalid {
+    background-color: #eeddff;
+}
+
+.page.main > .drinks.container > .drink-root.container.is-effective {
+    background-color: #ddf8ff;
 }
 
 .page.main > .drinks.container > .drink-root.container > * {
@@ -166,31 +187,24 @@ body {
     grid-area: started-at-hint;
 }
 
-.page.main > .drinks.container > .drink-root.container > .time-to.zero.label {
-    grid-area: time-to-zero-label;
+.page.main > .drinks.container > .drink-root.container > .blood-alcohol-concentration {
+    font-size: 0.7rem !important;
 }
 
-.page.main > .drinks.container > .drink-root.container > .time-to.zero.progress-container {
-    grid-area: time-to-zero-progress-container;
+.page.main > .drinks.container > .drink-root.container > .blood-alcohol-concentration.label {
+    grid-area: blood-alcohol-concentration-label;
 }
 
-.page.main > .drinks.container > .drink-root.container > .time-to.progress-container {
-    min-width: 50px;
+.page.main > .drinks.container > .drink-root.container > .blood-alcohol-concentration.value {
+    grid-area: blood-alcohol-concentration-value;
 }
 
-.page.main > .drinks.container > .drink-root.container > .time-to.progress-container > .time-to.progress-bar {
-    width: 0;
-    height: 100%;
-    background-color: cornflowerblue;
-}
-
-.page.main > .drinks.container > .drink-root.container > .time-to {
-    display: none !important;
+.page.main > .drinks.container > .drink-root.container > .blood-alcohol-concentration.hint {
+    grid-area: blood-alcohol-concentration-hint;
 }
 
 .page.main > .drinks.container > .drink-root.container > .value {
     font-size: 1.3rem;
-    min-height: 30px;
     min-width: 50px;
 }
 
@@ -206,22 +220,16 @@ body {
     transform: scale(1.3);
 }
 
-.page.main > .drinks.container > .drink-root.container > .time-to.progress-container {
-    background-color: white;
-    border: 1px solid gray;
-    align-self: stretch;
-}
-
-.page.main > .drinks.container > .drink-root.container > .time-to.label {
-    font-size: 0.7em;
-}
-
 .page.settings {
     display: grid;
     grid-auto-flow: row;
     grid-auto-rows: auto;
     row-gap: 8px;
     padding-top: 8px;
+}
+
+.page.settings.collapsed {
+    display: none;
 }
 
 .page.settings > .header {
@@ -268,7 +276,6 @@ body {
 
 .page.settings > .variables > .value {
     max-width: 80px;
-    min-height: 30px;
     font-size: 1.5rem;
 }
 

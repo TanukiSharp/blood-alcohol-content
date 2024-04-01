@@ -6,17 +6,17 @@ class PagesController {
     }
 
     hideLoading() {
-        this._loadingContainerElement.style.display = 'none';
+        this._loadingContainerElement.classList.add('collapsed');
     }
 
     showMain() {
-        this._mainContainerElement.style.removeProperty('display');
-        this._settingsContainerElement.style.display = 'none';
+        this._mainContainerElement.classList.remove('collapsed');
+        this._settingsContainerElement.classList.add('collapsed');
     }
 
     showSettings() {
-        this._mainContainerElement.style.display = 'none';
-        this._settingsContainerElement.style.removeProperty('display');
+        this._mainContainerElement.classList.add('collapsed');
+        this._settingsContainerElement.classList.remove('collapsed');
     }
 }
 

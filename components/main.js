@@ -1,41 +1,23 @@
 import { DrinkComponent } from './drink.js';
 import { localStorageEx } from '../lib/localStorage.js';
-import { toDateTimeInputElementString, round, toHumanReadableTime, toDateTime } from '../lib/utils.js';
+import { toDateTimeInputElementString, round, toHumanReadableTime, addHoursToDate } from '../lib/utils.js';
 import { Drink, Options, computeBloodAlcoholConcentration } from '../lib/bac.js';
 import { settingsComponent } from './settings.js';
 import { pagesController } from '../pagesController.js';
+import { Time } from '../lib/time.js';
 
-const DEBUG = false;
+import { Debug } from '../lib/debug.js';
+const debug = new Debug();
 
 class MainComponent {
     constructor() {
-        const debugCanvas = document.querySelector('.page.main > .debug');
-        if (DEBUG) {
-            this._debug = debugCanvas.getContext('2d');
-            this._debugTime = 0;
-            this._debugPrevBac = -1;
-            this._debug.canvas.width = this._debug.canvas.clientWidth;
-            this._debug.canvas.height = this._debug.canvas.clientHeight;
-        } else {
-            debugCanvas.style.display = 'none';
-        }
-
         this._lastBloodAlcoholConcentration = 0;
         this._drinks = [];
         this._setupElements();
         this._loadDrinks();
         this._recompute();
 
-        if (DEBUG) {
-            this._debugNow = (new Date(2024, 2, 10, 22, 16, 55)).getTime();
-            for (let i = 0; i < 800; i += 1) {
-                this._recompute();
-                this._debugNow += 1000;
-            }
-        } else {
-            this._debugNow = Date.now();
-            setInterval(() => this._recompute(), 1000);
-        }
+        setInterval(() => this._recompute(), 1000);
     }
 
     _setupElements() {
@@ -70,7 +52,7 @@ class MainComponent {
         let drink;
 
         const onRemove = (cancellable) => {
-            if (DEBUG === false && this._lastBloodAlcoholConcentration > 0) {
+            if (drink.isEffective) {
                 if (prompt('Are you sure you want to delete this drink ?\nIt may end up in a completely wrong computation.\n\nType \'yes\' to confirm drink deletion.')?.toLocaleLowerCase() !== 'yes') {
                     cancellable.isCancelled = true;
                     return;
@@ -116,9 +98,9 @@ class MainComponent {
     _updateTimeToLimitHint() {
         if (settingsComponent.drivingLimit > 0) {
             this._timeToLimitHintElement.innerText = `(${settingsComponent.drivingLimit} g/L)`;
-            this._timeToLimitContainerElement.style.removeProperty('display');
+            this._timeToLimitContainerElement.classList.remove('collapsed');
         } else {
-            this._timeToLimitContainerElement.style.display = 'none';
+            this._timeToLimitContainerElement.classList.add('collapsed');
         }
     }
 
@@ -139,23 +121,19 @@ class MainComponent {
             drivingLimit
         );
 
-        let now;
-        if (DEBUG) {
-            now = this._debugNow;
-        } else {
-            now = Date.now();
-        }
+        const now = Time.now();
 
         const drinks = [];
 
         for (const drinkComponent of this._drinks) {
-            drinkComponent.evaluateParameters(now);
-            drinkComponent.setEliminationRatio(0);
+            drinkComponent.setBloodAlcoholConcentration(0);
+            drinkComponent.setIsEffective(false);
+            drinkComponent.evaluateTimeAndEffectiveness(now);
 
             drinks.push(new Drink(
                 drinkComponent.quantity,
                 drinkComponent.alcoholPercentage,
-                new Date(drinkComponent.startedAt).getTime(),
+                new Date(drinkComponent.startedAt).getTime()
             ));
         }
 
@@ -165,37 +143,29 @@ class MainComponent {
             return;
         }
 
-        for (let i = 0; i < result.drinkEliminationRatios.length; i += 1) {
-            this._drinks[i].setEliminationRatio(result.drinkEliminationRatios[i]);
-        }
+        for (const drinkInfo of result.perDrinkInfo) {
+            const sourceDrink = this._drinks[drinkInfo.index];
 
-        if (DEBUG) {
-            if (this._debugPrevBac < 0) {
-                this._debugPrevBac = result.bloodAlcoholConcentration;
-            }
-
-            const bacResolution = 200;
-            this._debug.moveTo(this._debugTime, this._debug.canvas.clientHeight - this._debugPrevBac * bacResolution - 1);
-            this._debugTime += 1.5;
-            this._debug.lineTo(this._debugTime, this._debug.canvas.clientHeight - result.bloodAlcoholConcentration * bacResolution - 1);
-            this._debug.stroke();
-            this._debugPrevBac = result.bloodAlcoholConcentration;
+            sourceDrink.setBloodAlcoholConcentration(round(drinkInfo.bloodAlcoholConcentration, 3));
+            sourceDrink.setIsEffective(drinkInfo.isEffective);
+            sourceDrink.evaluateTimeAndEffectiveness(now);
+            sourceDrink.SET_ENDS_AT(drinkInfo.endsAt);
         }
 
         this._lastBloodAlcoholConcentration = result.bloodAlcoholConcentration;
 
         this._alcoholBloodConcentrationValueElement.innerText = round(result.bloodAlcoholConcentration, 2);
 
-        this._timeToLimitValueElement.innerText = this._timeToDisplayString(result.timeToLimit);
-        this._timeToZeroValueElement.innerText = this._timeToDisplayString(result.timeToZero);
+        this._timeToLimitValueElement.innerText = this._timeToDisplayString(now, result.timeToLimit);
+        this._timeToZeroValueElement.innerText = this._timeToDisplayString(now, result.timeToZero);
     }
 
-    _timeToDisplayString(timeTo) {
+    _timeToDisplayString(date, timeTo) {
         if (timeTo <= 0) {
             return '-';
         }
 
-        return `${toHumanReadableTime(timeTo)} (at ${toDateTime(timeTo)})`
+        return `${toHumanReadableTime(timeTo)} (at ${addHoursToDate(date, timeTo)})`
     }
 
     _numberDrinks() {

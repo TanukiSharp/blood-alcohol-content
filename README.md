@@ -1,11 +1,8 @@
 # Overview
 
-> [!CAUTION]
-> If you ran into this project by mistake, DO NTO use it, it has a severe issue.
-
 This project is a web-based blood alcohol content calculator.
 
-Most of information needed to understand the (easy) math can be found here: https://en.wikipedia.org/wiki/Blood_alcohol_content
+Most of the information needed to understand the (easy) math can be found here: https://en.wikipedia.org/wiki/Blood_alcohol_content
 
 ⚠️ Please have a look at the warning section at the end of this document.
 
@@ -15,37 +12,31 @@ The web application can be found here: https://tanukisharp.github.io/blood-alcoh
 
 ## How to run (for developers)
 
-When working locally for development purpose, just spawn a local web server where the `index.js` is located and open a browser to the hosting address and port.
+When working locally for development purpose, just spawn a local web server where the `index.js` file is located and open a browser to the hosting address and port.
 
 ## How to use (for users)
 
 ### Settings
 
-The first thing to do is to do a bit of setup. For that, click on the settings button.
+The first thing to do is to do a bit of setup. For that, click on the settings button. (⚙️)
 
-![Settings button](./docs/settings-button.png)
+Then set your `Body weight`, and your `Rho factor`. The women Rho factor average is 0.58 L/kg and the men Rho factor average is 0.71 L/Kg, as indicated on the settings page.
 
-Then set your `Body weight`, and your `Rho factor`. The women average is 0.58 and the men average is 0.71, as indicated on the settings page.
-
-As for the `Alcohol elimination rate`, you can let the default value, unless you know what you are doing.
+As for the `Alcohol elimination rate`, you can let the default value (0.148 g/L/hour), unless you know what you are doing.
 
 You can also set the `Driving limit` to the regulation value where you drive, but feel free to set it lower if you want.
 
-Your settings are stored in the browser's local storage, so if you refresh the page or close it and reopen it later, your settings are maintained, but if you use another browser or uninstall it and reinstall it, or clean it's local storage data, you will have to setup the application again.
+Your settings are stored in the browser's local storage, so if you refresh the page or close it and reopen it later, your settings remain, but if you use another browser or uninstall the browser and reinstall it, or clean it's local storage data, you will have to setup the application again.
 
 ### Main page
 
-Then add a drink by clicking on the following button:
-
-![Add drink button](./docs/add-drink-button.png)
+Add a drink by clicking on the add drink (➕🍺) button.
 
 A drink entry appears below. Set the `Drink quantity`, in liters, and the `Alcohol percentage` in percentage of alcohol contained in the drink.
 
 When a drink is added, the `Started at` date and time are automatically set to now, but you can tweak it if you started to drink before entering values.
 
-Click on the crossed swords button to remove a drink.
-
-![Remove drink button](./docs/remove-drink-button.png)
+Click on the crossed swords (⚔️) button to remove a drink.
 
 On a drink entry, the `Time to zero` is the progression of the alcohol elimination. When the bar is full, the alcohol contained in the drink is completely eliminated by your body, and the entry turns green. At this moment, you can remove it, because it does not affect your alcohol concentration anymore.
 

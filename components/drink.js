@@ -1,4 +1,5 @@
-import { addEventListener, bindToLabel, MILLISECONDS_PER_HOUR } from '../lib/utils.js';
+import { addEventListener, bindToLabel } from '../lib/utils.js';
+import { Time } from '../lib/time.js';
 
 export class DrinkComponent {
     constructor(quantity, alcoholPercentage, startedAt, userRemoveFunc, valueChangedFunc) {
@@ -12,7 +13,10 @@ export class DrinkComponent {
         this._alcoholPercentageElement.value = alcoholPercentage;
         this._startedAtElement.value = startedAt;
 
-        this.setTimeToZero(0, 0);
+        this.setBloodAlcoholConcentration(0);
+        this.setIsEffective(false);
+
+        this.evaluateTimeAndEffectiveness(startedAt);
     }
 
     get quantity() {
@@ -27,11 +31,15 @@ export class DrinkComponent {
         return this._startedAtElement.value;
     }
 
+    get isEffective() {
+        return this._isEffective;
+    }
+
     get rootElement() {
         return this._rootContainerElement;
     }
 
-    isValid(now) {
+    _isValid(now) {
         if (this.quantity <= 0 || this.alcoholPercentage <= 0) {
             return false;
         }
@@ -45,42 +53,37 @@ export class DrinkComponent {
         return true;
     }
 
+    SET_ENDS_AT(dt) {
+        this._endsAt = dt;
+
+        this._bloodAlcoholConcentration.innerText = `${this._concentration} - ${this._isEffective} - ${new Date(this._endsAt)}`;
+    }
+
     setDrinkNumber(num) {
         this._quantityLabelElement.innerText = `Drink ${num} quantity:`;
     }
 
-    evaluateParameters(now) {
-        if (this.isValid(now) === false) {
-            this._rootContainerElement.style.backgroundColor = '#edf';
-            return false;
-        } else {
-            this._rootContainerElement.style.removeProperty('background-color');
-            return true;
+    setBloodAlcoholConcentration(concentration) {
+        this._concentration = concentration;
+
+        this._bloodAlcoholConcentration.innerText = `${this._concentration} - ${this._isEffective} - ${new Date(this._endsAt)}`;
+    }
+
+    setIsEffective(isEffective) {
+        this._isEffective = isEffective;
+
+        this._bloodAlcoholConcentration.innerText = `${this._concentration} - ${this._isEffective} - ${new Date(this._endsAt)}`;
+    }
+
+    evaluateTimeAndEffectiveness(now) {
+        this._rootContainerElement.classList.remove('is-invalid');
+        this._rootContainerElement.classList.remove('is-effective');
+
+        if (this._isValid(now) === false) {
+            this._rootContainerElement.classList.add('is-invalid');
+        } else if (this._isEffective) {
+            this._rootContainerElement.classList.add('is-effective');
         }
-    }
-
-    setEliminationRatio(ratio) {
-        // this._timeToZeroProgressElement.style.width = `${ratio * 100}%`;
-
-        // if (ratio >= 1) {
-        //     this._rootContainerElement.classList.add('done');
-        // } else {
-        //     this._rootContainerElement.classList.remove('done');
-        // }
-    }
-
-    setTimeToZero(now, timeToZero) {
-        // const startedAt = new Date(this._startedAtElement.value).getTime();
-
-        // const endOfZero = now + timeToZero * MILLISECONDS_PER_HOUR;
-        // const ratioOfZero = Math.min((now - startedAt) / (endOfZero - startedAt), 1);
-        // this._timeToZeroProgressElement.style.width = `${ratioOfZero * 100}%`;
-
-        // if (ratioOfZero >= 1) {
-        //     this._rootContainerElement.classList.add('done');
-        // } else {
-        //     this._rootContainerElement.classList.remove('done');
-        // }
     }
 
     _delete() {
@@ -157,23 +160,27 @@ export class DrinkComponent {
         this._startedAtElement.className = 'started-at value';
         this._startedAtElement.type = 'datetime-local';
         bindToLabel(startedAtLabelElement, this._startedAtElement);
-        addEventListener(this._disposeFunctions, this._startedAtElement, 'input', () => this._valueChangedFunc?.());
+        addEventListener(this._disposeFunctions, this._startedAtElement, 'input', () => {
+            this.evaluateTimeAndEffectiveness(Time.now());
+            this._valueChangedFunc?.();
+        });
         this._rootContainerElement.appendChild(this._startedAtElement);
 
         // ---
 
-        const timeToZeroLabelElement = document.createElement('span');
-        timeToZeroLabelElement.className = 'time-to zero label';
-        timeToZeroLabelElement.innerText = 'Time to zero:';
-        this._rootContainerElement.appendChild(timeToZeroLabelElement);
+        const bloodAlcoholConcentrationLabelElement = document.createElement('span');
+        bloodAlcoholConcentrationLabelElement.className = 'blood-alcohol-concentration label';
+        bloodAlcoholConcentrationLabelElement.innerText = 'Blood alcohol concentration:';
+        this._rootContainerElement.appendChild(bloodAlcoholConcentrationLabelElement);
 
-        const timeToZeroProgressContainerElement = document.createElement('div');
-        timeToZeroProgressContainerElement.className = 'time-to zero progress-container';
-        this._rootContainerElement.appendChild(timeToZeroProgressContainerElement);
+        this._bloodAlcoholConcentration = document.createElement('div');
+        this._bloodAlcoholConcentration.className = 'blood-alcohol-concentration value';
+        this._rootContainerElement.appendChild(this._bloodAlcoholConcentration);
 
-        this._timeToZeroProgressElement = document.createElement('div');
-        this._timeToZeroProgressElement.className = 'time-to zero progress-bar';
-        timeToZeroProgressContainerElement.appendChild(this._timeToZeroProgressElement);
+        const bloodAlcoholConcentrationHintElement = document.createElement('span');
+        bloodAlcoholConcentrationHintElement.className = 'blood-alcohol-concentration hint';
+        bloodAlcoholConcentrationHintElement.innerText = 'in g/L';
+        this._rootContainerElement.appendChild(bloodAlcoholConcentrationHintElement);
 
         // ---
 
