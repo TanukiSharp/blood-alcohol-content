@@ -4,10 +4,7 @@ import { toDateTimeInputElementString, round, toHumanReadableTime, addHoursToDat
 import { Drink, Options, computeBloodAlcoholConcentration } from '../lib/bac.js';
 import { settingsComponent } from './settings.js';
 import { pagesController } from '../pagesController.js';
-import { Time } from '../lib/time.js';
-
-import { Debug } from '../lib/debug.js';
-const debug = new Debug();
+import { timeline } from '../lib/timeline.js';
 
 class MainComponent {
     constructor() {
@@ -121,7 +118,7 @@ class MainComponent {
             drivingLimit
         );
 
-        const now = Time.now();
+        const now = Date.now();
 
         const drinks = [];
 
@@ -139,17 +136,13 @@ class MainComponent {
 
         const result = computeBloodAlcoholConcentration(drinks, now, options);
 
-        if (result === null) {
-            return;
-        }
+        for (const lifetimeDrink of result.lifetimeDrinks) {
+            const sourceDrink = this._drinks[lifetimeDrink.index];
 
-        for (const drinkInfo of result.perDrinkInfo) {
-            const sourceDrink = this._drinks[drinkInfo.index];
-
-            sourceDrink.setBloodAlcoholConcentration(round(drinkInfo.bloodAlcoholConcentration, 3));
-            sourceDrink.setIsEffective(drinkInfo.isEffective);
+            sourceDrink.setBloodAlcoholConcentration(round(lifetimeDrink.bloodAlcoholConcentration, 3));
+            sourceDrink.setIsEffective(lifetimeDrink.isEffective);
             sourceDrink.evaluateTimeAndEffectiveness(now);
-            sourceDrink.SET_ENDS_AT(drinkInfo.endsAt);
+            sourceDrink.SET_ENDS_AT(lifetimeDrink.endsAt);
         }
 
         this._lastBloodAlcoholConcentration = result.bloodAlcoholConcentration;
@@ -158,6 +151,8 @@ class MainComponent {
 
         this._timeToLimitValueElement.innerText = this._timeToDisplayString(now, result.timeToLimit);
         this._timeToZeroValueElement.innerText = this._timeToDisplayString(now, result.timeToZero);
+
+        timeline.draw(now, result.inputDrinks, result.lifetimeDrinks);
     }
 
     _timeToDisplayString(date, timeTo) {

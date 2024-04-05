@@ -8,20 +8,6 @@ body {
     box-sizing: border-box;
 }
 
-
-.page.main > .debug.canvas {
-    background-color: whitesmoke;
-    border: 1px gray solid;
-    /* width: 100%;
-    height: 160px; */
-}
-
-.page.main > .toolbar.container > .debug.time {
-    grid-column: 2;
-    margin: 8px;
-}
-
-
 .page {
     padding-left: 8px;
     padding-top: 8px;
@@ -109,7 +95,6 @@ body {
     overflow-y: auto;
     overflow-x: visible;
     width: 100%;
-    max-width: 500px;
 }
 
 .page.main > .drinks.container > .drink-root.container {
@@ -218,6 +203,47 @@ body {
 .page.main > .drinks.container > .drink-root.container > .delete > * {
     margin: -1px;
     transform: scale(1.3);
+}
+
+.page.main > .timeline.container {
+    overflow: auto;
+    width: 100%;
+    max-height: 200px;
+    border: 1px gray solid;
+}
+
+.page.main > .timeline.container.collapsed {
+    display: none;
+}
+
+.page.main > .timeline.container > .timeline {
+    background-color: whitesmoke;
+    position: relative;
+}
+
+.page.main > .timeline.container > .timeline > * {
+    box-sizing: border-box;
+    cursor: none;
+    pointer-events: none;
+    margin: 0;
+    padding: 0;
+    padding-left: 4px;
+    background-color: #eeeeee;
+    border: 1px black solid;
+    position: absolute;
+    font: 12px "Segoe UI";
+    color: black;
+}
+
+.page.main > .timeline.container > .timeline > .now {
+    background-color: red;
+    border: 0;
+    padding: 0;
+}
+
+.page.main > .timeline.container > .timeline > .separator {
+    background-color: black;
+    border: 0;
 }
 
 .page.settings {

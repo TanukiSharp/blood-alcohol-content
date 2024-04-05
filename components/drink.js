@@ -161,7 +161,7 @@ export class DrinkComponent {
         this._startedAtElement.type = 'datetime-local';
         bindToLabel(startedAtLabelElement, this._startedAtElement);
         addEventListener(this._disposeFunctions, this._startedAtElement, 'input', () => {
-            this.evaluateTimeAndEffectiveness(Time.now());
+            this.evaluateTimeAndEffectiveness(Date.now());
             this._valueChangedFunc?.();
         });
         this._rootContainerElement.appendChild(this._startedAtElement);
