@@ -1,5 +1,4 @@
 import { addEventListener, bindToLabel } from '../lib/utils.js';
-import { Time } from '../lib/time.js';
 
 export class DrinkComponent {
     constructor(quantity, alcoholPercentage, startedAt, userRemoveFunc, valueChangedFunc) {
