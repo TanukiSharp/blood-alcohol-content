@@ -12,7 +12,7 @@ The web application can be found here: https://tanukisharp.github.io/blood-alcoh
 
 ## How to run (for developers)
 
-When working locally for development purpose, just spawn a local web server where the `index.js` file is located and open a browser to the hosting address and port.
+When working locally for development purpose, just spawn a local web server where the `index.html` file is located and open a browser to the hosting address and port.
 
 ## How to use (for users)
 
@@ -36,13 +36,11 @@ A drink entry appears below. Set the `Drink quantity`, in liters, and the `Alcoh
 
 When a drink is added, the `Started at` date and time are automatically set to now, but you can tweak it if you started to drink before entering values.
 
-Click on the crossed swords (⚔️) button to remove a drink.
-
-On a drink entry, the `Time to zero` is the progression of the alcohol elimination. When the bar is full, the alcohol contained in the drink is completely eliminated by your body, and the entry turns green. At this moment, you can remove it, because it does not affect your alcohol concentration anymore.
+Click on the crossed swords (⚔️) button to remove a drink. If a drink is still effective when you try to remove it, a confirmation box appears.
 
 Note that a drink with the `Started at` value set in the future turns purple, and is not taken into account to compute your alcohol concentration.
 
-An effective drink has a blue background.
+An effective drink has a blue background. A drink that is fully eliminated turns green, and you can delete it without confirmation.
 
 Also note that drink data is stored in the browser's local storage alongside your settings, so this data remain if you refresh the page or close and reopen your browser.
 
@@ -69,6 +67,14 @@ At this time, all the drink entries below should be green, and you can remove th
 Hereafter is an example of the main page:
 
 ![Main page](./docs/main-page.png)
+
+The timeline at the bottom of the application shows your drinks, with the same color codes as the drink entries above.
+
+The blue vertical line represents the current time, the red vertical line represents the time to limit. The latter is hidden when `Driving limit` is set to zero or lower in the settings page.
+
+In the top part of the timeline, you can see the drinks entered with their respective `Started at` time. The length of the bar that represent drinks is the amount of time they take to be eliminated from your body.
+
+The bottom part of the timeline shows the drinks as your body will really eliminate them, one at a time, so when two drinks overlap, the next one is lined up after the previous one. In this case, the drinks are "connected" and the previous cannot be deleted even if it seams to be eliminated (the blue vertical bar indicating the current time is beyond the end of the drink). In this case, you should see the previous drink in blue color too, meaning it is still effective, or more precisely, it still affects your blood alcohol concentration, and if you remove it, the concentration computation becomes wrong.
 
 ## ⚠️ Warning ⚠️
 
