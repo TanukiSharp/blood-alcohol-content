@@ -256,7 +256,7 @@ body {
 }
 
 .page.main > .timeline.container > .timeline > .separator {
-    background-color: black;
+    background-color: #202020;
     border: 0;
 }
 
