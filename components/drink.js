@@ -38,7 +38,7 @@ export class DrinkComponent {
         return this._rootContainerElement;
     }
 
-    _isValid(now) {
+    isValid(now) {
         if (this.quantity <= 0 || this.alcoholPercentage <= 0) {
             return false;
         }
@@ -72,7 +72,7 @@ export class DrinkComponent {
         this._rootContainerElement.classList.remove('is-invalid');
         this._rootContainerElement.classList.remove('is-effective');
 
-        if (this._isValid(now) === false) {
+        if (this.isValid(now) === false) {
             this._rootContainerElement.classList.add('is-invalid');
         } else if (this._isEffective) {
             this._rootContainerElement.classList.add('is-effective');
