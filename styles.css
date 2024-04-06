@@ -243,8 +243,14 @@ body {
     color: black;
 }
 
-.page.main > .timeline.container > .timeline > .now {
+.page.main > .timeline.container > .timeline > .time-to-limit {
     background-color: red;
+    border: 0;
+    padding: 0;
+}
+
+.page.main > .timeline.container > .timeline > .now {
+    background-color: royalblue;
     border: 0;
     padding: 0;
 }
