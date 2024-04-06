@@ -52,12 +52,6 @@ export class DrinkComponent {
         return true;
     }
 
-    SET_ENDS_AT(dt) {
-        this._endsAt = dt;
-
-        this._bloodAlcoholConcentration.innerText = `${this._concentration} - ${this._isEffective} - ${new Date(this._endsAt)}`;
-    }
-
     setDrinkNumber(num) {
         this._quantityLabelElement.innerText = `Drink ${num} quantity:`;
     }

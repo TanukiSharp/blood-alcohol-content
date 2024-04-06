@@ -142,7 +142,6 @@ class MainComponent {
             sourceDrink.setBloodAlcoholConcentration(round(lifetimeDrink.bloodAlcoholConcentration, 3));
             sourceDrink.setIsEffective(lifetimeDrink.isEffective);
             sourceDrink.evaluateTimeAndEffectiveness(now);
-            sourceDrink.SET_ENDS_AT(lifetimeDrink.endsAt);
         }
 
         this._lastBloodAlcoholConcentration = result.bloodAlcoholConcentration;
@@ -152,7 +151,7 @@ class MainComponent {
         this._timeToLimitValueElement.innerText = this._timeToDisplayString(now, result.timeToLimit);
         this._timeToZeroValueElement.innerText = this._timeToDisplayString(now, result.timeToZero);
 
-        timeline.draw(now, result.inputDrinks, result.lifetimeDrinks);
+        timeline.draw(now, result.lifetimeDrinks);
     }
 
     _timeToDisplayString(date, timeTo) {
