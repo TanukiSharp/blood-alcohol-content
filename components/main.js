@@ -57,7 +57,7 @@ class MainComponent {
         let drink;
 
         const onRemove = (cancellable) => {
-            if (drink.isEffective) {
+            if (drink.isEffective && drink.isValid) {
                 if (prompt('Are you sure you want to delete this drink ?\nIt may end up in a completely wrong computation.\n\nType \'yes\' to confirm drink deletion.')?.toLocaleLowerCase() !== 'yes') {
                     cancellable.isCancelled = true;
                     return;
