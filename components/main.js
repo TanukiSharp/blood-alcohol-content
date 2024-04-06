@@ -159,7 +159,7 @@ class MainComponent {
         this._timeToLimitValueElement.innerText = this._timeToDisplayString(now, result.timeToLimit);
         this._timeToZeroValueElement.innerText = this._timeToDisplayString(now, result.timeToZero);
 
-        timeline.draw(now, result.timeToLimit, result.lifetimeDrinks);
+        timeline.draw(now, settingsComponent.drivingLimit <= 0 ? 0 : result.timeToLimit, result.lifetimeDrinks);
     }
 
     _timeToDisplayString(date, timeTo) {
