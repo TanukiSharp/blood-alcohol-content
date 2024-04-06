@@ -71,6 +71,14 @@ body {
     transform: scale(1.7);
 }
 
+.page.main > .toolbar.container > .version {
+    grid-row: 1;
+    grid-column: 2;
+    justify-self: end;
+    align-self: start;
+    margin-right: 12px;
+}
+
 .page.main > .toolbar.container > .show-settings {
     grid-row: 1;
     grid-column: 3;
@@ -260,12 +268,6 @@ body {
 
 .page.settings > .header {
     display: grid;
-}
-
-.page.settings > .header > .version {
-    grid-row: 1;
-    justify-self: start;
-    margin: 4px;
 }
 
 .page.settings > .header > .close {

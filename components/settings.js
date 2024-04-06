@@ -2,8 +2,6 @@ import { AVERAGE_HUMAN_ALCOHOL_ELIMINATION_RATE, MALE_RHO_FACTOR, FEMALE_RHO_FAC
 import { bindElementToLocalStorage } from '../lib/utils.js';
 import { pagesController } from '../pagesController.js';
 
-const VERSION = 3;
-
 const DEFAULT_BODY_WEIGHT = 50;
 const DEFAULT_DRIVING_LIMIT = 0.1;
 
@@ -33,7 +31,6 @@ class SettingsComponent {
     }
 
     _setupElements() {
-        this._setupVersion();
         this._setupCloseButton();
 
         this._setupBodyWeight();
@@ -43,11 +40,6 @@ class SettingsComponent {
 
         this._setupDefaultRhoFactors();
         this._setupDefaultAlcoholEliminationRate();
-    }
-
-    _setupVersion() {
-        const versionElement = document.querySelector('.page.settings > .header > .version');
-        versionElement.innerText = `version ${VERSION}`;
     }
 
     _setupCloseButton() {

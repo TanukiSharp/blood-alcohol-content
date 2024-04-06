@@ -6,6 +6,8 @@ import { settingsComponent } from './settings.js';
 import { pagesController } from '../pagesController.js';
 import { timeline } from '../lib/timeline.js';
 
+const VERSION = 3;
+
 class MainComponent {
     constructor() {
         this._lastBloodAlcoholConcentration = 0;
@@ -20,8 +22,9 @@ class MainComponent {
     _setupElements() {
         this._drinksContainer = document.querySelector('.page.main > .drinks.container');
 
-        this._setupShowSettingsButton();
         this._setupAddDrinkButton();
+        this._setupVersion();
+        this._setupShowSettingsButton();
 
         this._setupAlcoholBloodConcentrationElement();
         this._setupTimeToLimitElement();
@@ -38,6 +41,11 @@ class MainComponent {
             });
             pagesController.showSettings();
         });
+    }
+
+    _setupVersion() {
+        const versionElement = document.querySelector('.page.main > .toolbar.container > .version');
+        versionElement.innerText = `version ${VERSION}`;
     }
 
     _onDrinkValueChanged() {
