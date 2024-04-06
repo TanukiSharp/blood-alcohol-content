@@ -114,6 +114,7 @@ export class DrinkComponent {
         this._quantityElement = document.createElement('input');
         this._quantityElement.className = 'quantity value';
         this._quantityElement.type = 'number';
+        this._quantityElement.step = 0.01;
         bindToLabel(this._quantityLabelElement, this._quantityElement);
         addEventListener(this._disposeFunctions, this._quantityElement, 'input', () => this._valueChangedFunc?.());
         this._rootContainerElement.appendChild(this._quantityElement);
@@ -133,6 +134,7 @@ export class DrinkComponent {
         this._alcoholPercentageElement = document.createElement('input');
         this._alcoholPercentageElement.className = 'alcohol-percentage value';
         this._alcoholPercentageElement.type = 'number';
+        this._alcoholPercentageElement.step = 0.5;
         bindToLabel(alcoholPercentageLabelElement, this._alcoholPercentageElement);
         addEventListener(this._disposeFunctions, this._alcoholPercentageElement, 'input', () => this._valueChangedFunc?.());
         this._rootContainerElement.appendChild(this._alcoholPercentageElement);
