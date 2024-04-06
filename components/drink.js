@@ -57,15 +57,11 @@ export class DrinkComponent {
     }
 
     setBloodAlcoholConcentration(concentration) {
-        this._concentration = concentration;
-
-        this._bloodAlcoholConcentration.innerText = `${this._concentration} - ${this._isEffective} - ${new Date(this._endsAt)}`;
+        this._bloodAlcoholConcentration.innerText = concentration;
     }
 
     setIsEffective(isEffective) {
         this._isEffective = isEffective;
-
-        this._bloodAlcoholConcentration.innerText = `${this._concentration} - ${this._isEffective} - ${new Date(this._endsAt)}`;
     }
 
     evaluateTimeAndEffectiveness(now) {
