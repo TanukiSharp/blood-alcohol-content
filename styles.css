@@ -241,6 +241,7 @@ body {
     position: absolute;
     font: 12px "Segoe UI";
     color: black;
+    clip-path: stroke-box;
 }
 
 .page.main > .timeline.container > .timeline > .time-to-limit {
