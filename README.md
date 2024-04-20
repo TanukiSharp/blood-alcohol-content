@@ -66,15 +66,25 @@ At this time, all the drink entries below should be green, and you can remove th
 
 Hereafter is an example of the main page:
 
-![Main page](./docs/main-page.png)
+![Main page](./docs/main-page.png "Screenshot of the main page.")
 
 The timeline at the bottom of the application shows your drinks, with the same color codes as the drink entries above.
 
 The blue vertical line represents the current time, the red vertical line represents the time to limit. The latter is hidden when `Driving limit` is set to zero or lower in the settings page.
 
-In the top part of the timeline, you can see the drinks entered with their respective `Started at` time. The length of the bar that represent drinks is the amount of time they take to be eliminated from your body.
+In the top part of the timeline, you can see the drinks entered with their respective `Started at` time. The length of the bar represents the amount of time it takes for the drink to be eliminated from your body.
 
-The bottom part of the timeline shows the drinks as your body will really eliminate them, one at a time, so when two drinks overlap, the next one is lined up after the previous one. In this case, the drinks are "connected" and the previous cannot be deleted even if it seams to be eliminated (the blue vertical bar indicating the current time is beyond the end of the drink). In this case, you should see the previous drink in blue color too, meaning it is still effective, or more precisely, it still affects your blood alcohol concentration, and if you remove it, the concentration computation becomes wrong.
+The bottom part of the timeline shows the drinks as your body will really eliminate them, one at a time, so when two drinks overlap, the next one is lined up after the previous one. In this case, the drinks are "connected" and the previous cannot be deleted even if it seams to be eliminated, because the blue vertical bar indicating the current time is beyond the end of the drink.
+
+When a drink or a group of "connected" drinks is "disconnected" from effective drinks by a time gap, they turn green, and can be safely deleted, as shown on the screenshot above. (drinks 1 and 2)
+
+Hereafter is an example of "connected" drinks, where the drink 1 still affects your alcohol concentration despite being completely beyond the current time. (blue vertical line)
+
+![Connect drinks](./docs/connected-drinks.png "Example of connected drinks where one still impacts alcohol concentration.")
+
+In this case, you should see the previous drink in blue color too, meaning it is still effective, or more precisely, it still affects your blood alcohol concentration, and if you remove it, the concentration computation gets wrong.
+
+
 
 ## ⚠️ Warning ⚠️
 
