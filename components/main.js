@@ -6,7 +6,7 @@ import { settingsComponent } from './settings.js';
 import { pagesController } from '../pagesController.js';
 import { timeline } from '../lib/timeline.js';
 
-const VERSION = 7;
+const VERSION = 8;
 
 class MainComponent {
     constructor() {
